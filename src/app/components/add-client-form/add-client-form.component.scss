@@ -1,0 +1,58 @@
+@import 'src/mixins.scss';
+
+#logo-space {
+  border: 1px solid black;
+  background-color: lightgray;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+#logo-image {
+  display: block;
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  align-content: center;
+}
+
+.ant-input {
+  line-height: 2;
+  font-size: 14px;
+}
+
+.upload-logo {
+  padding-left: 50px;
+}
+
+.card-body {
+  padding-bottom: 0px;
+}
+
+.save-btn {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  max-width: 150px;
+}
+
+.btn-file input[type='file'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}

@@ -1,0 +1,39 @@
+<div>
+  <div class="air__utils__heading">
+    <h5><strong>Client overview</strong></h5>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card"> 
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-10">
+              <h5><strong>Clients</strong></h5>
+            </div>
+            <div class="col-2">
+
+              <button [routerLink]="'/client/add_client'" class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
+                <span class="btn-addon">
+                  <i class="btn-addon-icon fe fe-user-plus"></i>
+                </span>
+                <strong>Add Client</strong>
+              </button>
+
+            </div>
+          </div>
+
+          <div class="row"> 
+            <div class="col-12">
+              <client-overview-table>
+              </client-overview-table>
+            </div>
+          </div>
+
+        </div>          
+      </div>
+    </div>
+  </div>
+</div>
+      

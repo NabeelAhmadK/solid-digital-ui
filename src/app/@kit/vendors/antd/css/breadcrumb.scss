@@ -1,0 +1,32 @@
+// Import mixins
+@import 'src/mixins.scss';
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// DEFAULT THEME STYLES
+[data-kit-theme='default'] {
+  .ant-breadcrumb {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    font-size: rem(18);
+
+    &-link,
+    &-link a {
+      color: $dark-gray-1;
+      pointer-events: none;
+    }
+
+    nz-breadcrumb-item:last-child a {
+      font-weight: bold;
+      color: black;
+    }
+
+    &-separator {
+      color: $dark-gray-3;
+      font-weight: bold;
+    }
+  }
+}

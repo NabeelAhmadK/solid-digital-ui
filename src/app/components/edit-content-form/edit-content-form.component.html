@@ -1,0 +1,69 @@
+<div>
+  <div class="air__utils__heading">
+    <h5><strong>Edit content</strong></h5>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-xl-12 col-lg-12">
+
+      <div class="card">
+        <div class="card-body">      
+
+
+          <form nz-form [nzLayout]="'verical'" [formGroup]="contentForm">
+            <nz-form-item>
+              <nz-form-label>Name</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Content Name" id="content_name" formControlName="content_name" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label>Type</nz-form-label>
+              <nz-form-control>
+                <nz-select style="width: 100%" ngSize="large" nzPlaceHolder="Please select content type" class="select-input" id="content_type" formControlName="content_type">
+                  <nz-option *ngFor="let option of contentTypes" [nzLabel]="option.label" [nzValue]="option.value" class="select-label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+        
+            <nz-form-item>
+              <nz-form-label>Email Subject</nz-form-label>
+              <nz-form-control>
+                <input nz-input placeholder="Email Subject" id="content_subject" formControlName="content_email_subject" />
+              </nz-form-control>
+            </nz-form-item>
+        
+            <nz-form-item>
+              <nz-form-label>Content</nz-form-label>
+              <div id="content_editor">
+                <quill-editor [style]="{height: '200px'}" formControlName="content_html"></quill-editor>
+              </div>
+            </nz-form-item>
+        
+            <div class="pull-right">
+        
+              <nz-form-item>
+                <button class="btn btn-lg btn-primary btn-with-addon text-nowrap save-btn" type="submit"  (click)="saveContent()">
+                  <span class="btn-addon">
+                    <i class="btn-addon-icon fe fe-save"></i>
+                  </span>
+                  Save
+                </button>
+              </nz-form-item>
+        
+            </div>
+        
+        </form>
+
+        </div>          
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
