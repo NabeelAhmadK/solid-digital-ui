@@ -23,7 +23,5 @@ export class KitAntdCheckboxExampleComponent {
     { label: 'Orange', value: 'Orange' },
   ]
 
-  log(value: object[]): void {
-    console.log(value)
-  }
+  log(value: object[]): void {}
 }

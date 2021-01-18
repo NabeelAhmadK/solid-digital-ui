@@ -8,9 +8,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { NgProgressModule } from '@ngx-progressbar/core'
 import { NgProgressRouterModule } from '@ngx-progressbar/router'
 import { NgProgressHttpModule } from '@ngx-progressbar/http'
-import { AngularFireModule } from '@angular/fire'
-import { AngularFireAuthModule } from '@angular/fire/auth'
-import { AngularFirestoreModule, SETTINGS } from '@angular/fire/firestore'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -19,7 +16,6 @@ import { EffectsModule } from '@ngrx/effects'
 import { StoreRouterConnectingModule } from '@ngrx/router-store'
 import { reducers, metaReducers } from './store/reducers'
 import { UserEffects } from './store/user/effects'
-import { firebaseConfig, firebaseAuthService } from './services/firebase'
 import { jwtAuthService } from './services/jwt'
 import { ClientService } from './services/client'
 import { ContactPersonService } from './services/contact-person'
@@ -60,15 +56,9 @@ registerLocaleData(localeEn, 'en')
     }),
     NgProgressRouterModule,
     NgProgressHttpModule,
-
-    // init firebase
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
   ],
   providers: [
     // services
-    firebaseAuthService,
     jwtAuthService,
     ClientService,
     ContentService,
@@ -78,7 +68,6 @@ registerLocaleData(localeEn, 'en')
     ...LOCALE_PROVIDERS,
 
     // firestore settings
-    { provide: SETTINGS, useValue: {} },
   ],
   bootstrap: [AppComponent],
 })

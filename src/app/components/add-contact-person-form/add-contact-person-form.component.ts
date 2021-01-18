@@ -13,17 +13,23 @@ import { Router, ActivatedRoute } from '@angular/router'
   providers: [ContactPersonService, DecimalPipe],
 })
 export class AddContactPersonFormComponent implements OnInit {
+  contactPersonForm: FormGroup
+  accountForm: FormGroup
+  url: any
+  client_id: any
+  sub: any
+
   constructor(
     private fb: FormBuilder,
     private msg: NzMessageService,
     private contactPersonService: ContactPersonService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {}
-  contactPersonForm: FormGroup
-  url
-  client_id
-  sub
+  ) {
+    this.activatedRoute.params.subscribe(({ id }) => {
+      if (id) this.client_id = id
+    })
+  }
 
   @Output()
   contactPersonAdded: EventEmitter<ContactPerson> = new EventEmitter<ContactPerson>()
@@ -71,7 +77,6 @@ export class AddContactPersonFormComponent implements OnInit {
     reader.onload = () => {
       this.url = reader.result as string
 
-      console.log(this.url)
       this.dummy_text = false
 
       const file_formData = new FormData()
@@ -80,9 +85,8 @@ export class AddContactPersonFormComponent implements OnInit {
       this.contactPersonService.uploadProfileImage(file_formData).subscribe(
         profile_image => {
           this.msg.success('Profile Image Uploaded SuccessFully')
-          console.log(profile_image['name'])
-          this.contactPersonForm.patchValue({
-            profile_image_name: profile_image['name'],
+          this.accountForm.patchValue({
+            profile_image: profile_image['name'],
           })
         },
         error => {
@@ -93,46 +97,83 @@ export class AddContactPersonFormComponent implements OnInit {
     }
   }
 
-  saveContactPerson(): void {
-    const formData1 = new FormData()
-    const formData2 = new FormData()
-
-    formData1.append('first_name', this.contactPersonForm.value.first_name)
-    formData1.append('last_name', this.contactPersonForm.value.last_name)
-    formData1.append('mobile_number', this.contactPersonForm.value.mobile_number)
-    formData1.append('email', this.contactPersonForm.value.email)
-    formData1.append('client_id', this.client_id)
-    formData1.append('send_email_invite', this.contactPersonForm.value.send_email_invite)
-    formData1.append('is_account_active', this.contactPersonForm.value.is_account_active)
-    formData1.append('profile_image', this.contactPersonForm.value.profile_image_name)
-
-    let full_name =
-      this.contactPersonForm.value.first_name + ' ' + this.contactPersonForm.value.last_name
-    let user_name = this.contactPersonForm.value.email
+  SaveandAddOther() {
+    this.contactPersonForm.get('client_id').setValue(this.client_id)
+    let full_name = `${this.contactPersonForm.get('first_name').value} ${
+      this.contactPersonForm.get('last_name').value
+    }`
+    let userEmail = this.contactPersonForm.get('email').value
     let password = 'soliddigital'
 
-    formData2.append('name', full_name)
-    formData2.append('email', user_name)
-    formData2.append('password', password)
-    formData2.append('c_password', password)
+    this.accountForm.get('name').setValue(full_name)
+    this.accountForm.get('email').setValue(userEmail)
 
-    this.contactPersonService.registerUserAccount(formData2).subscribe(
+    this.contactPersonService.registerUserAccount(this.accountForm.value).subscribe(
       user_account_res => {
         let user_account = user_account_res.data.user
         let user_account_id = user_account['id']
 
         if (user_account && user_account_id) {
-          formData1.append('user_account_id', user_account_id)
+          this.contactPersonForm.get('user_account_id').patchValue(user_account_id)
 
-          this.contactPersonService.addContactPerson(formData1).subscribe(
+          this.contactPersonForm
+            .get('profile_image')
+            .patchValue(this.contactPersonForm.get('profile_image_name').value)
+
+          this.contactPersonService.addContactPerson(this.contactPersonForm.value).subscribe(
             contact_person => {
               this.msg.success('Contact Person Added Successfully!')
-              this.router.navigate(['/'])
+              this.accountForm.reset({
+                password: 'soliddigital',
+                c_password: 'soliddigital',
+              })
+              this.contactPersonForm.reset({
+                is_account_active: 'No',
+                send_email_invite: '1',
+              })
             },
             error => {
               this.msg.error('Error Adding Contact Person!')
-              // this.errors = error.json().errors;
-              // this.isLoading = false;
+            },
+          )
+        } else {
+          this.msg.error('Error Adding Contact Person!')
+        }
+      },
+      error => {
+        this.msg.error('Error Adding Contact Person!')
+        // this.errors = error.json().errors;
+        // this.isLoading = false;
+      },
+    )
+  }
+
+  saveContactPerson(): void {
+    this.contactPersonForm.get('client_id').setValue(this.client_id)
+    let full_name = `${this.contactPersonForm.get('first_name').value} ${
+      this.contactPersonForm.get('last_name').value
+    }`
+    let userEmail = this.contactPersonForm.get('email').value
+    let password = 'soliddigital'
+
+    this.accountForm.get('name').setValue(full_name)
+    this.accountForm.get('email').setValue(userEmail)
+
+    this.contactPersonService.registerUserAccount(this.accountForm.value).subscribe(
+      user_account_res => {
+        let user_account = user_account_res.data.user
+        let user_account_id = user_account['id']
+
+        if (user_account && user_account_id) {
+          this.contactPersonForm.get('user_account_id').patchValue(user_account_id)
+
+          this.contactPersonService.addContactPerson(this.contactPersonForm.value).subscribe(
+            contact_person => {
+              this.msg.success('Contact Person Added Successfully!')
+              this.router.navigate(['/client/client_overview'])
+            },
+            error => {
+              this.msg.error('Error Adding Contact Person!')
             },
           )
         } else {
@@ -148,19 +189,25 @@ export class AddContactPersonFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sub = this.activatedRoute.paramMap.subscribe(params => {
-      this.client_id = params.get('id')
+    this.contactPersonForm = this.fb.group({
+      user_account_id: [null],
+      first_name: [null, Validators.required],
+      last_name: [null, Validators.required],
+      mobile_number: [null, Validators.required],
+      client_id: [null, Validators.required],
+      email: [null, Validators.required],
+      is_account_active: ['No', Validators.required],
+      send_email_invite: ['1', Validators.required],
+      profile_image: [null],
+      profile_image_name: [null],
+    })
 
-      this.contactPersonForm = this.fb.group({
-        first_name: ['', Validators.required],
-        last_name: ['', Validators.required],
-        mobile_number: ['', Validators.required],
-        email: ['', Validators.required],
-        is_account_active: ['No', Validators.required],
-        send_email_invite: ['1', Validators.required],
-        profile_image: ['', Validators.required],
-        profile_image_name: ['', Validators.required],
-      })
+    this.accountForm = this.fb.group({
+      name: [null, Validators.required],
+      email: [null, Validators.required],
+      password: ['soliddigital', Validators.required],
+      c_password: ['soliddigital', Validators.required],
+      profile_image: ['soliddigital', Validators.required],
     })
   }
 }

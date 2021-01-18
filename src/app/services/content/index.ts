@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import store from 'store'
-
+import { environment } from 'src/environments/environment'
 import { DecimalPipe } from '@angular/common'
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators'
 import { SortDirection } from './sortable.directive'
@@ -54,14 +54,14 @@ function matches(content: Content, term: string, pipe: PipeTransform) {
   return content.name.toLowerCase().includes(term.toLowerCase())
 }
 
-const API_URL: string = 'http://localhost:8000/api/v1'
+const API_URL: string = `${environment.baseUrl}/api/v1`
 
 @Injectable({ providedIn: 'root' })
 export class ContentService {
   private _loading$ = new BehaviorSubject<boolean>(true)
   private _search$ = new Subject<void>()
-  private _contents$ = new BehaviorSubject<Content[]>([])
-  private _total$ = new BehaviorSubject<number>(0)
+  _contents$ = new BehaviorSubject<Content[]>([])
+  _total$ = new BehaviorSubject<number>(0)
 
   private _state: State = {
     page: 1,
@@ -79,26 +79,6 @@ export class ContentService {
     this.accessToken = store.get('accessToken')
     this.headers = new HttpHeaders()
     this.headers = this.headers.set('Authorization', 'Bearer ' + this.accessToken)
-
-    this.getAllContents().subscribe(response => {
-      this.CONTENTS_DATA = response.data
-      console.log('DATA: ', this.CONTENTS_DATA)
-    })
-
-    this._search$
-      .pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false)),
-      )
-      .subscribe(result => {
-        this._contents$.next(result.contents)
-        this._total$.next(result.total)
-      })
-
-    this._search$.next()
   }
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
@@ -140,13 +120,13 @@ export class ContentService {
     this._set({ sortDirection })
   }
 
-  private _set(patch: Partial<State>) {
+  _set(patch: Partial<State>) {
     Object.assign(this._state, patch)
     this._search$.next()
   }
 
-  private getAllContents() {
-    let URI = `${API_URL}/contents/`
+  getAllContents() {
+    let URI = `${API_URL}/contents`
     return this.http.get<CustomResponse>(URI, { headers: this.headers })
   }
 
@@ -156,7 +136,7 @@ export class ContentService {
   }
 
   public addContent(content) {
-    return this.http.post(API_URL + '/contents/', content, { headers: this.headers })
+    return this.http.post(API_URL + '/contents', content, { headers: this.headers })
   }
 
   public updateContent(content, id) {
@@ -167,7 +147,7 @@ export class ContentService {
     return this.http.delete(`${API_URL}/contents/${id}`, { headers: this.headers })
   }
 
-  private _search(): Observable<SearchResult> {
+  _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state
 
     // 1. sort

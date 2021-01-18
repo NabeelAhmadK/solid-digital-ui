@@ -12,11 +12,7 @@ export class KitAntdDatePickerExampleComponent {
 
   constructor(private i18n: NzI18nService) {}
 
-  onChange(result: Date): void {
-    console.log('onChange: ', result)
-  }
+  onChange(result: Date): void {}
 
-  getWeek(result: Date): void {
-    console.log('week: ', getISOWeek(result))
-  }
+  getWeek(result: Date): void {}
 }

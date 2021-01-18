@@ -9,7 +9,7 @@ import { ChartistModule } from 'ng-chartist'
 import { NvD3Module } from 'ng2-nvd3'
 import { CommonModule } from '@angular/common'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-
+import { ValidationModule } from '../advanced/validation'
 import 'd3'
 import 'nvd3'
 

@@ -5,13 +5,10 @@ import { Component } from '@angular/core'
   templateUrl: './tag.component.html',
 })
 export class KitAntdTagExampleComponent {
-  onClose(): void {
-    console.log('tag was closed.')
-  }
+  onClose(): void {}
 
   preventDefault(e: Event): void {
     e.preventDefault()
     e.stopPropagation()
-    console.log('tag can not be closed.')
   }
 }

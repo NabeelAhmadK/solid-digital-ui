@@ -29,9 +29,7 @@ export class KitAntdTreeSelectExampleComponent implements OnInit {
     },
   ]
 
-  onChange($event: string): void {
-    console.log($event)
-  }
+  onChange($event: string): void {}
 
   ngOnInit(): void {
     // mock async

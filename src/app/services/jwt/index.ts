@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
+import { environment } from 'src/environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import store from 'store'
 
 @Injectable()
 export class jwtAuthService {
-  public clientId = '2'
-  public clientSecret = 'x8TUWrVllmNe0iomB6XPFspuXmc7wWcj5A1k2O1W'
-  public scope = ''
-  public grant_type = 'password'
-  public base_url = 'http://localhost:8000'
+  public base_url = environment.baseUrl
 
   constructor(private http: HttpClient) {}
 
@@ -69,5 +66,13 @@ export class jwtAuthService {
       : {}
 
     return this.http.get(this.base_url + '/api/auth/logout', params)
+  }
+
+  forgotPassword(payload): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-type': 'application/json',
+    })
+
+    return this.http.post(this.base_url + '/api/auth/forgot', payload)
   }
 }

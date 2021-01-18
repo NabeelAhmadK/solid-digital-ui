@@ -8,11 +8,7 @@ export class KitAntdMentionExampleComponent {
   inputValue: string = '@afc163'
   suggestions = ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご']
 
-  onChange(value: string): void {
-    console.log(value)
-  }
+  onChange(value: string): void {}
 
-  onSelect(suggestion: string): void {
-    console.log(`onSelect ${suggestion}`)
-  }
+  onSelect(suggestion: string): void {}
 }

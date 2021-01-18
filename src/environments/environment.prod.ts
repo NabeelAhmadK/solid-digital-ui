@@ -3,5 +3,5 @@ export const environment = {
   authenticated: false,
   hmr: false,
   // URL of Laravel backend
-  baseUrl: 'http://localhost:8000',
+  baseUrl: 'http://54.220.253.6',
 }

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import store from 'store'
-
+import { environment } from 'src/environments/environment'
 import { DecimalPipe } from '@angular/common'
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators'
 import { SortDirection } from './sortable.directive'
@@ -66,7 +66,7 @@ function matches(client: Client, term: string, pipe: PipeTransform) {
   return client.business_name.toLowerCase().includes(term.toLowerCase())
 }
 
-const API_URL: string = 'http://localhost:8000/api/v1'
+const API_URL: string = `${environment.baseUrl}/api/v1`
 
 @Injectable({ providedIn: 'root' })
 export class ClientService {
@@ -91,26 +91,7 @@ export class ClientService {
     this.accessToken = store.get('accessToken')
     this.headers = new HttpHeaders()
     this.headers = this.headers.set('Authorization', 'Bearer ' + this.accessToken)
-
-    this.getAllClients().subscribe(response => {
-      this.CLIENTS_DATA = response.data
-      console.log('DATA: ', this.CLIENTS_DATA)
-    })
-
-    this._search$
-      .pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false)),
-      )
-      .subscribe(result => {
-        this._clients$.next(result.clients)
-        this._total$.next(result.total)
-      })
-
-    this._search$.next()
+    this.headers = this.headers.set('X-Requested-With', 'XMLHttpRequest')
   }
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
@@ -157,8 +138,8 @@ export class ClientService {
     this._search$.next()
   }
 
-  private getAllClients() {
-    let URI = `${API_URL}/clients/`
+  getAllClients() {
+    let URI = `${API_URL}/clients`
     return this.http.get<CustomResponse>(URI, { headers: this.headers })
   }
 
@@ -168,7 +149,7 @@ export class ClientService {
   }
 
   public addClient(client) {
-    return this.http.post(API_URL + '/clients/', client, { headers: this.headers })
+    return this.http.post(API_URL + '/clients', client, { headers: this.headers })
   }
 
   public uploadLogo(logo) {

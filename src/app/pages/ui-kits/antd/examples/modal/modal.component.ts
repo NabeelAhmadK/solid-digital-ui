@@ -15,12 +15,10 @@ export class KitAntdModalExampleComponent {
   }
 
   handleOk(): void {
-    console.log('Button ok clicked!')
     this.isVisible = false
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!')
     this.isVisible = false
   }
 

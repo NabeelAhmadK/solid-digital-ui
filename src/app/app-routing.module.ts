@@ -12,24 +12,20 @@ import { LayoutMainComponent } from 'src/app/layouts/Main/main.component'
 import { LayoutCustomerComponent } from 'src/app/layouts/Customer/customer.component'
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'client/client_overview',
-    pathMatch: 'full',
-  },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
   {
     path: '',
     component: LayoutMainComponent,
     children: [
       {
         path: 'client',
-        data: { breadcrumb: 'Client' },
+        data: { breadcrumb: 'Client', role: 'Adminstrator' },
         canActivate: [AuthGuard],
         loadChildren: () => import('src/app/pages/client/client.module').then(m => m.ClientModule),
       },
       {
         path: 'content',
-        data: { breadcrumb: 'Content' },
+        data: { breadcrumb: 'Content', role: 'Adminstrator' },
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/content/content.module').then(m => m.ContentModule),
@@ -42,7 +38,7 @@ const routes: Routes = [
     children: [
       {
         path: 'customer',
-        data: { breadcrumb: 'Customer' },
+        data: { breadcrumb: 'Customer', role: 'Adminstrator' },
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/customer/customer.module').then(m => m.CustomerModule),
@@ -59,10 +55,6 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: '**',
-    redirectTo: '/auth/404',
-  },
 ]
 
 @NgModule({
@@ -71,7 +63,6 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes, {
-      useHash: true,
       preloadingStrategy: AppPreloader,
     }),
     LayoutsModule,

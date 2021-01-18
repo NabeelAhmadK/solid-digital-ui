@@ -132,30 +132,14 @@ export class KitAntdTreeExampleComponent implements OnInit, AfterViewInit {
     },
   ]
 
-  nzClick(event: NzFormatEmitEvent): void {
-    console.log(event)
-  }
+  nzClick(event: NzFormatEmitEvent): void {}
 
-  nzCheck(event: NzFormatEmitEvent): void {
-    console.log(event)
-  }
+  nzCheck(event: NzFormatEmitEvent): void {}
 
   // nzSelectedKeys change
-  nzSelect(keys: string[]): void {
-    console.log(keys, this.nzTreeComponent.getSelectedNodeList())
-  }
+  nzSelect(keys: string[]): void {}
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    // get node by key: '10011'
-    console.log(this.nzTreeComponent.getTreeNodeByKey('10011'))
-    // use tree methods
-    console.log(
-      this.nzTreeComponent.getTreeNodes(),
-      this.nzTreeComponent.getCheckedNodeList(),
-      this.nzTreeComponent.getSelectedNodeList(),
-      this.nzTreeComponent.getExpandedNodeList(),
-    )
-  }
+  ngAfterViewInit(): void {}
 }

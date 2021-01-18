@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router'
   providers: [ClientService, DecimalPipe],
 })
 export class EditClientFormComponent implements OnInit {
+  client_id: any
   constructor(
     private fb: FormBuilder,
     private msg: NzMessageService,
@@ -22,7 +23,7 @@ export class EditClientFormComponent implements OnInit {
   ) {
     this.clientForm = this.fb.group({
       business_name: ['', Validators.required],
-      straat_number: ['', Validators.required],
+      street_number: ['', Validators.required],
       phone_number: ['', Validators.required],
       postal_code: ['', Validators.required],
       city: ['', Validators.required],
@@ -30,12 +31,36 @@ export class EditClientFormComponent implements OnInit {
       logo: ['', Validators.required],
       logo_filename: ['', Validators.required],
     })
+
+    this.sub = this.activatedRoute.paramMap.subscribe(params => {
+      this.client_id = params.get('id')
+
+      this.clientService.getClient(this.client_id).subscribe(
+        client => {
+          this.client = client.data
+
+          this.clientForm.patchValue({
+            business_name: this.client.business_name,
+            street_number: this.client.street_number,
+            phone_number: this.client.phone_number,
+            postal_code: this.client.postal_code,
+            city: this.client.city,
+            business_email: this.client.email,
+          })
+          this.url = 'http://54.220.253.6' + this.client.logo['url']
+          this.dummy_text = false
+        },
+        error => {
+          // this.errors = error.json().errors;
+          // this.isLoading = false;
+        },
+      )
+    })
   }
 
   clientForm: FormGroup
   dummy_text: boolean = true
   url
-  client_id
   sub
   client: Client
 
@@ -71,7 +96,6 @@ export class EditClientFormComponent implements OnInit {
       this.clientService.uploadLogo(file_formData).subscribe(
         logo_image => {
           this.msg.success('Logo Uploaded SuccessFully!')
-          console.log(logo_image['name'])
           this.clientForm.patchValue({
             logo_filename: logo_image['name'],
           })
@@ -114,33 +138,7 @@ export class EditClientFormComponent implements OnInit {
     this.router.navigate(['/client/add_contact_person/' + this.client_id])
   }
 
-  ngOnInit(): void {
-    this.sub = this.activatedRoute.paramMap.subscribe(params => {
-      this.client_id = params.get('id')
-
-      this.clientService.getClient(this.client_id).subscribe(
-        client => {
-          this.client = client.data
-
-          this.clientForm.patchValue({
-            business_name: this.client.business_name,
-            straat_number: this.client.street_number,
-            phone_number: this.client.phone_number,
-            postal_code: this.client.postal_code,
-            city: this.client.city,
-            business_email: this.client.email,
-          })
-          this.url = 'http://localhost:8000' + this.client.logo['url']
-          this.dummy_text = false
-        },
-        error => {
-          console.log(error)
-          // this.errors = error.json().errors;
-          // this.isLoading = false;
-        },
-      )
-    })
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.sub.unsubscribe()

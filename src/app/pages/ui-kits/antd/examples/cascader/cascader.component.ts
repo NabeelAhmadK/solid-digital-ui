@@ -113,7 +113,5 @@ export class KitAntdCascaderExampleComponent implements OnInit {
     }
   }
 
-  onChanges(values: any): void {
-    console.log(values, this.values)
-  }
+  onChanges(values: any): void {}
 }

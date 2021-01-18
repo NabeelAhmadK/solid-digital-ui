@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import store from 'store'
-
+import { environment } from 'src/environments/environment'
 import { DecimalPipe } from '@angular/common'
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators'
 import { SortDirection } from './sortable.directive'
@@ -62,9 +62,9 @@ function matches(contact_person: ContactPerson, term: string, pipe: PipeTransfor
   return contact_person.first_name.toLowerCase().includes(term.toLowerCase())
 }
 
-const API_URL: string = 'http://localhost:8000/api/v1'
+const API_URL: string = `${environment.baseUrl}/api/v1`
 
-const AUTH_API_URL: string = 'http://localhost:8000/api/auth'
+const AUTH_API_URL: string = `${environment.baseUrl}/api/auth`
 
 @Injectable({ providedIn: 'root' })
 export class ContactPersonService {
@@ -92,23 +92,7 @@ export class ContactPersonService {
 
     this.getAllContactPersons().subscribe(response => {
       this.CONTACT_PERSONS_DATA = response.data
-      console.log('DATA: ', this.CONTACT_PERSONS_DATA)
     })
-
-    this._search$
-      .pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false)),
-      )
-      .subscribe(result => {
-        this._contact_persons$.next(result.contact_persons)
-        this._total$.next(result.total)
-      })
-
-    this._search$.next()
   }
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
@@ -155,8 +139,8 @@ export class ContactPersonService {
     this._search$.next()
   }
 
-  private getAllContactPersons() {
-    let URI = `${API_URL}/contact-people/`
+  public getAllContactPersons(): Observable<any> {
+    let URI = `${API_URL}/contact-people`
     return this.http.get<CustomResponse>(URI, { headers: this.headers })
   }
 
@@ -181,7 +165,7 @@ export class ContactPersonService {
   }
 
   public addContactPerson(contact_person) {
-    return this.http.post(API_URL + '/contact-people/', contact_person, { headers: this.headers })
+    return this.http.post(API_URL + '/contact-people', contact_person, { headers: this.headers })
   }
 
   public registerUserAccount(user_account) {
@@ -191,7 +175,12 @@ export class ContactPersonService {
   }
 
   public uploadProfileImage(profile_image) {
-    return this.http.post(API_URL + '/contact-people/media', profile_image, {
+    return this.http.post(API_URL + '/users/media', profile_image, {
+      headers: this.headers,
+    })
+  }
+  public updateProfileImage(profile_image, id) {
+    return this.http.put(API_URL + `/users/${id}`, profile_image, {
       headers: this.headers,
     })
   }
@@ -206,6 +195,9 @@ export class ContactPersonService {
     return this.http.delete(`${API_URL}/contact-people/${id}`, { headers: this.headers })
   }
 
+  getUserbyId(id): Observable<any> {
+    return this.http.get(`${API_URL}/users/${id}`, { headers: this.headers })
+  }
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state
 

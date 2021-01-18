@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common'
-import { Component, QueryList, ViewChildren } from '@angular/core'
-import { Observable } from 'rxjs'
-
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core'
+import { BehaviorSubject, Observable, Subject } from 'rxjs'
+import { debounceTime, delay, switchMap, tap } from 'rxjs/operators'
 import { ContentService } from '../../services/content'
 import { Content } from '../../services/content'
 import { NgbdSortableHeader, SortEvent } from '../../services/content/sortable.directive'
@@ -13,19 +13,35 @@ import { Router } from '@angular/router'
   styleUrls: ['./content-overview-table.component.scss'],
   providers: [ContentService, DecimalPipe],
 })
-export class ContentOverviewTableComponent {
-  contents$: Observable<Content[]>
+export class ContentOverviewTableComponent implements OnInit {
+  contents: Array<any> = []
+  showLoading: boolean = false
+  private _search$ = new Subject<void>()
+  private _loading$ = new BehaviorSubject<boolean>(true)
   total$: Observable<number>
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>
 
   constructor(public contentService: ContentService, private router: Router) {
-    this.contents$ = contentService.contents$
+    this.GetContents()
     this.total$ = contentService.total$
+  }
+  ngOnInit() {}
+
+  GetContents() {
+    this.showLoading = true
+    this.contentService.getAllContents().subscribe(
+      ({ data }) => {
+        this.showLoading = false
+        this.contents = data
+      },
+      err => {
+        this.showLoading = false
+      },
+    )
   }
 
   onSort({ column, direction }: SortEvent) {
-    // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
         header.direction = ''
@@ -41,14 +57,14 @@ export class ContentOverviewTableComponent {
   }
 
   deleteContent(content_id): void {
+    this.showLoading = true
     this.contentService.deleteContent(content_id).subscribe(
       res => {
-        alert('Content Deleted Successfully!')
-        this.contentService.init()
-        this.router.navigate(['/content/content_overview'])
+        this.showLoading = false
+        this.GetContents()
       },
       error => {
-        console.log(error)
+        this.showLoading = false
       },
     )
   }

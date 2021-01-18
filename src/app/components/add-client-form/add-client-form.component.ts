@@ -4,6 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd/message'
 import { UploadChangeParam } from 'ng-zorro-antd/upload'
 import { Client, ClientService } from 'src/app/services/client'
 import { DecimalPipe } from '@angular/common'
+import { ValidationService } from '../../pages/advanced/validation'
 import { Router } from '@angular/router'
 
 @Component({
@@ -22,10 +23,24 @@ export class AddClientFormComponent implements OnInit {
 
   clientForm: FormGroup
   dummy_text: boolean = true
+  submitted: boolean = false
   url
 
   @Output()
   clientAdded: EventEmitter<Client> = new EventEmitter<Client>()
+
+  ngOnInit(): void {
+    this.clientForm = this.fb.group({
+      business_name: [null, [Validators.required]],
+      street_number: [null, [Validators.required]],
+      phone_number: [null, [Validators.required, ValidationService.phoneValidator]],
+      postal_code: [null, [Validators.required, ValidationService.numberValidator]],
+      city: [null, [Validators.required]],
+      email: [null, [Validators.required, ValidationService.emailValidator]],
+      logo: [null],
+      logo_filename: [null],
+    })
+  }
 
   handleChange(event) {
     if (!event.target.files[0] || event.target.files[0].length == 0) {
@@ -48,7 +63,6 @@ export class AddClientFormComponent implements OnInit {
     reader.onload = () => {
       this.url = reader.result as string
 
-      console.log(this.url)
       this.dummy_text = false
 
       const file_formData = new FormData()
@@ -57,7 +71,6 @@ export class AddClientFormComponent implements OnInit {
       this.clientService.uploadLogo(file_formData).subscribe(
         logo_image => {
           this.msg.success('Logo Uploaded SuccessFully!')
-          console.log(logo_image['name'])
           this.clientForm.patchValue({
             logo_filename: logo_image['name'],
           })
@@ -71,38 +84,17 @@ export class AddClientFormComponent implements OnInit {
   }
 
   saveBusiness(): void {
-    this.clientService
-      .addClient({
-        business_name: this.clientForm.value.business_name,
-        street_number: this.clientForm.value.straat_number,
-        postal_code: this.clientForm.value.postal_code,
-        city: this.clientForm.value.city,
-        phone_number: this.clientForm.value.phone_number,
-        email: this.clientForm.value.business_email,
-        logo: this.clientForm.value.logo_filename,
-      })
-      .subscribe(
-        client => {
-          this.msg.success('Client Added Successfully!')
-          this.router.navigate(['/'])
-        },
-        error => {
-          // this.errors = error.json().errors;
-          // this.isLoading = false;
-        },
-      )
-  }
-
-  ngOnInit(): void {
-    this.clientForm = this.fb.group({
-      business_name: ['', Validators.required],
-      straat_number: ['', Validators.required],
-      phone_number: ['', Validators.required],
-      postal_code: ['', Validators.required],
-      city: ['', Validators.required],
-      business_email: ['', Validators.required],
-      logo: ['', Validators.required],
-      logo_filename: ['', Validators.required],
-    })
+    this.submitted = true
+    if (this.clientForm.invalid) return
+    this.clientService.addClient(this.clientForm.value).subscribe(
+      client => {
+        this.msg.success('Client Added Successfully!')
+        this.router.navigate(['/'])
+      },
+      error => {
+        // this.errors = error.json().errors;
+        // this.isLoading = false;
+      },
+    )
   }
 }

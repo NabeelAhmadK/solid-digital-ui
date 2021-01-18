@@ -20,11 +20,7 @@ export class KitAntdTransferExampleComponent implements OnInit {
     this.items.forEach(idx => (this.list[idx].direction = 'right'))
   }
 
-  select(ret: {}): void {
-    console.log('nzSelectChange', ret)
-  }
+  select(ret: {}): void {}
 
-  change(ret: {}): void {
-    console.log('nzChange', ret)
-  }
+  change(ret: {}): void {}
 }

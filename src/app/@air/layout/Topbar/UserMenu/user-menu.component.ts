@@ -25,7 +25,7 @@ export class TopbarUserMenuComponent {
         this.role = 'Contact Person'
       }
       this.email = state.email
-      this.profile_image = 'http://localhost:8000' + state.profile_image['url']
+      this.profile_image = 'http://54.220.253.6' + state?.profile_image?.url
     })
   }
 

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from 'src/app/shared.module'
 import { AdvancedRouterModule } from './advanced-routing.module'
 import { WidgetsComponentsModule } from 'src/app/@kit/widgets/widgets-components.module'
-
+import { ValidationModule } from './validation'
 // layout
 import { AdvancedTypographyComponent } from 'src/app/pages/advanced/typography/typography.component'
 import { AdvancedMailTemplatesComponent } from 'src/app/pages/advanced/mail-templates/mail-templates.component'
@@ -28,6 +28,7 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     SharedModule,
+    ValidationModule,
     AdvancedRouterModule,
     FormsModule,
     ReactiveFormsModule,

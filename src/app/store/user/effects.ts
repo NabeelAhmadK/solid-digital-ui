@@ -10,14 +10,12 @@ import { NzNotificationService } from 'ng-zorro-antd'
 import * as Reducers from 'src/app/store/reducers'
 import * as UserActions from './actions'
 import { jwtAuthService } from 'src/app/services/jwt'
-import { firebaseAuthService } from 'src/app/services/firebase'
 
 @Injectable()
 export class UserEffects implements OnInitEffects {
   constructor(
     private actions: Actions,
     private jwtAuthService: jwtAuthService,
-    private firebaseAuthService: firebaseAuthService,
     private router: Router,
     private route: ActivatedRoute,
     private rxStore: Store<any>,
@@ -43,13 +41,18 @@ export class UserEffects implements OnInitEffects {
             if (response && response.data.access_token) {
               store.set('accessToken', response.data.access_token)
               this.notification.success('Logged In', 'You have successfully logged in!')
+
+              if (response.data.user.is_admin) {
+                this.router.navigate(['/client/client_overview'], { replaceUrl: true })
+              } else {
+                this.router.navigate(['/customer/dashboard'], { replaceUrl: true })
+              }
               return new UserActions.LoadCurrentAccount()
             }
             this.notification.warning('Auth Failed', response.message)
             return new UserActions.LoginUnsuccessful()
           }),
           catchError(error => {
-            console.log('LOGIN ERROR: ', error)
             this.notification.error('Login Failed', 'Invalid Credentials!')
             return from([{ type: UserActions.LOGIN_UNSUCCESSFUL }])
           }),
@@ -81,7 +84,6 @@ export class UserEffects implements OnInitEffects {
             return new UserActions.RegisterUnsuccessful()
           }),
           catchError(error => {
-            console.log('REGISTER ERROR: ', error)
             return from([{ type: UserActions.LOGIN_UNSUCCESSFUL }])
           }),
         )
@@ -112,7 +114,6 @@ export class UserEffects implements OnInitEffects {
             return new UserActions.LoadCurrentAccountUnsuccessful()
           }),
           catchError(error => {
-            console.log('ACCOUNT LOAD ERROR: ', error)
             return from([{ type: UserActions.LOGIN_UNSUCCESSFUL }])
           }),
         )

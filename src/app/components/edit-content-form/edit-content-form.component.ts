@@ -89,11 +89,7 @@ export class EditContentFormComponent implements OnInit {
             this.contentForm.get('content_type').setValue(this.contentTypes[1].value)
           }
         },
-        error => {
-          console.log(error)
-          // this.errors = error.json().errors;
-          // this.isLoading = false;
-        },
+        error => {},
       )
     })
   }

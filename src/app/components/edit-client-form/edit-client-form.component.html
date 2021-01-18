@@ -5,141 +5,144 @@
   <div class="row">
     <div class="col-xl-12 col-lg-12">
       <div class="card">
-        <div class="card-body">      
+        <div class="card-body">
           <h5 class="mb-4">
             <strong>Company details</strong>
           </h5>
           <form nz-form [nzLayout]="'vertical'" [formGroup]="clientForm">
 
             <div class="row">
-            
+
               <div class="col-9">
-          
+
                 <div class="row">
                   <div class="col-12">
                     <nz-form-item>
                       <!-- <nz-form-label nzFor="business_name">Business Name</nz-form-label> -->
                       <nz-form-control>
-                        <input nz-input placeholder="Business Name" id="business_name" formControlName="business_name" />
+                        <input nz-input placeholder="Business Name" id="business_name"
+                          formControlName="business_name" />
                       </nz-form-control>
                     </nz-form-item>
                   </div>
-            
+
                   <div class="col-12">
                     <nz-form-item>
                       <!-- <nz-form-label nzFor="straat_number">Straat Number</nz-form-label> -->
                       <nz-form-control>
-                        <input nz-input placeholder="Straat + Number" id="straat_number" formControlName="straat_number"/>
+                        <input nz-input placeholder="Street + Number" id="straat_number"
+                          formControlName="street_number" />
                       </nz-form-control>
                     </nz-form-item>
                   </div>
                 </div>
-          
-                  <div class="row">
-                    
-                    <div class="col-6">
-                      <nz-form-item>
-                        <!-- <nz-form-label nzFor="postal_code">Postal Code</nz-form-label> -->
-                        <nz-form-control>
-                          <input nz-input placeholder="Postal Code" id="postal_code" formControlName="postal_code" />
-                        </nz-form-control>
-                      </nz-form-item>
-                    </div>
-          
-                    <div class="col-6">
-                      <nz-form-item>
-                        <!-- <nz-form-label nzFor="city">City</nz-form-label> -->
-                        <nz-form-control>
-                          <input nz-input placeholder="City" id="city" formControlName="city" />
-                        </nz-form-control>
-                      </nz-form-item>
-                    </div>
+
+                <div class="row">
+
+                  <div class="col-6">
+                    <nz-form-item>
+                      <!-- <nz-form-label nzFor="postal_code">Postal Code</nz-form-label> -->
+                      <nz-form-control>
+                        <input nz-input placeholder="Postal Code" id="postal_code" formControlName="postal_code" />
+                      </nz-form-control>
+                    </nz-form-item>
                   </div>
-          
-                  <div class="row">
-          
-                    <div class="col-12">
-                      <nz-form-item>
-                        <!-- <nz-form-label nzFor="phone_number">Phone Number</nz-form-label> -->
-                        <nz-form-control>
-                          <input nz-input placeholder="Phone Number" id="phone_number" formControlName="phone_number" />
-                        </nz-form-control>
-                      </nz-form-item>
-                    </div>
-          
-                    <div class="col-12">
-                      <nz-form-item>
-                        <!-- <nz-form-label nzFor="business_email">Business Email</nz-form-label> -->
-                        <nz-form-control>
-                          <input nz-input placeholder="Business Email" id="business_email" formControlName="business_email" />
-                        </nz-form-control>
-                      </nz-form-item>
-                    </div>
-          
+
+                  <div class="col-6">
+                    <nz-form-item>
+                      <!-- <nz-form-label nzFor="city">City</nz-form-label> -->
+                      <nz-form-control>
+                        <input nz-input placeholder="City" id="city" formControlName="city" />
+                      </nz-form-control>
+                    </nz-form-item>
                   </div>
-              
+                </div>
+
+                <div class="row">
+
+                  <div class="col-12">
+                    <nz-form-item>
+                      <!-- <nz-form-label nzFor="phone_number">Phone Number</nz-form-label> -->
+                      <nz-form-control>
+                        <input nz-input placeholder="Phone Number" id="phone_number" formControlName="phone_number" />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div class="col-12">
+                    <nz-form-item>
+                      <!-- <nz-form-label nzFor="business_email">Business Email</nz-form-label> -->
+                      <nz-form-control>
+                        <input nz-input placeholder="Business Email" id="business_email"
+                          formControlName="business_email" />
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                </div>
+
               </div>
-              
+
               <div class="col-3">
-          
+
                 <div class="upload-logo">
-          
+
                   <div id="logo-space">
-                    <img src="url" id="logo-image" [src]="url" *ngIf="url"/>
+                    <img src="url" id="logo-image" [src]="url" *ngIf="url" />
                     <h4 class="text-center text-blue mt-5" *ngIf="dummy_text">Client Logo</h4>
                   </div>
-          
+
                   <nz-form-item>
                     <span class="btn btn-primary btn-file">
-                      <i nz-icon nzType="upload"></i> Upload <input type="file" (change)="handleChange($event)" formControlName="logo" > </span>
+                      <i nz-icon nzType="upload"></i> Upload <input type="file" (change)="handleChange($event)"
+                        formControlName="logo"> </span>
                   </nz-form-item>
-                
+
                 </div>
-          
+
               </div>
-          
+
               <div class="col-12">
-          
+
                 <nz-form-item>
                   <button (click)="saveBusiness()" type="button" class="btn btn-md btn-primary save-btn">
                     <strong>Save Business</strong>
                   </button>
                 </nz-form-item>
-                
+
               </div>
             </div>
           </form>
-        </div>          
+        </div>
       </div>
 
       <div class="card">
-        <div class="card-body">      
+        <div class="card-body">
 
           <div class="row">
             <div class="col-10">
               <h5><strong>Contact person</strong></h5>
             </div>
             <div class="col-2">
-  
-              <button class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn" (click)="addContactPerson()">
+
+              <button class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn"
+                (click)="addContactPerson()">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-user-plus"></i>
                 </span>
                 <strong>Add Contact Person</strong>
               </button>
-  
+
             </div>
           </div>
-  
-          <div class="row"> 
-            <div class="col-12">
-              <contact-person-table
-               [client_id]="client_id"
-              >
+
+          <div class="row">
+            <div class="col-12" *ngIf="client_id">
+              <contact-person-table>
               </contact-person-table>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
 
     </div>

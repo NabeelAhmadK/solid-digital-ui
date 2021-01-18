@@ -5,7 +5,7 @@ import { UploadChangeParam } from 'ng-zorro-antd/upload'
 import { Content, ContentService } from 'src/app/services/content'
 import { DecimalPipe } from '@angular/common'
 import { Router } from '@angular/router'
-
+import { ValidationService } from '../../pages/advanced/validation'
 @Component({
   selector: 'add-content-form',
   templateUrl: './add-content-form.component.html',
@@ -31,12 +31,24 @@ export class AddContentFormComponent implements OnInit {
     private router: Router,
   ) {}
 
+  submitted: boolean = false
   contentForm: FormGroup
 
   @Output()
   contentAdded: EventEmitter<Content> = new EventEmitter<Content>()
 
+  ngOnInit(): void {
+    this.contentForm = this.fb.group({
+      content_name: ['', Validators.required],
+      content_type: ['', Validators.required],
+      content_html: ['', Validators.required],
+      content_email_subject: ['', Validators.required],
+    })
+  }
+
   saveContent(): void {
+    this.submitted = true
+    if (this.contentForm.invalid) return
     this.contentService
       .addContent({
         name: this.contentForm.value.content_name,
@@ -54,14 +66,5 @@ export class AddContentFormComponent implements OnInit {
           // this.isLoading = false;
         },
       )
-  }
-
-  ngOnInit(): void {
-    this.contentForm = this.fb.group({
-      content_name: ['', Validators.required],
-      content_type: ['', Validators.required],
-      content_html: ['', Validators.required],
-      content_email_subject: ['', Validators.required],
-    })
   }
 }

@@ -6,7 +6,7 @@ import { NgbdSortableHeader, SortEvent } from '../../services/contact-person/sor
 
 import { ContactPerson, ContactPersonService } from '../../services/contact-person'
 
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'contact-person-table',
@@ -14,17 +14,40 @@ import { Router } from '@angular/router'
   styleUrls: ['./contact-person-table.component.scss'],
   providers: [ContactPersonService, DecimalPipe],
 })
-export class ContactPersonTableComponent {
+export class ContactPersonTableComponent implements OnInit {
   contact_persons$: Observable<ContactPerson[]>
+  contactPersons: Array<any> = []
   total$: Observable<number>
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>
 
-  @Input() client_id: number
+  client_id: any
 
-  constructor(public contactPersonService: ContactPersonService, private router: Router) {
+  constructor(
+    public contactPersonService: ContactPersonService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
     this.contact_persons$ = contactPersonService.contact_persons$
     this.total$ = contactPersonService.total$
+
+    this.route.params.subscribe(param => {
+      if (param.id) {
+        this.client_id = param.id
+        this.GetContactPersons(this.client_id)
+      }
+    })
+  }
+
+  ngOnInit() {}
+
+  GetContactPersons(clientId) {
+    let all_contact_persons
+    this.contactPersonService.getAllContactPersons().subscribe(({ data }) => {
+      this.contactPersons = data.filter(function(cp) {
+        return cp.client_id == clientId
+      })
+    })
   }
 
   editContactPerson(cp_id): void {
@@ -38,9 +61,7 @@ export class ContactPersonTableComponent {
         this.contactPersonService.init()
         this.router.navigate(['/'])
       },
-      error => {
-        console.log(error)
-      },
+      error => {},
     )
   }
 

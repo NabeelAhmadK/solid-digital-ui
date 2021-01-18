@@ -7,9 +7,9 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ACLComponent } from 'src/app/@air/system/ACL/acl.component'
 
 // antd components module
+import { ValidationModule } from './pages/advanced/validation'
 import { AntdModule } from 'src/app/antd.module'
-
-const MODULES = [CommonModule, RouterModule, AntdModule, TranslateModule]
+const MODULES = [CommonModule, RouterModule, AntdModule, TranslateModule, ValidationModule]
 
 @NgModule({
   imports: [...MODULES],

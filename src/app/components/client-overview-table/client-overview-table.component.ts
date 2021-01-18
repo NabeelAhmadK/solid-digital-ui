@@ -1,11 +1,11 @@
 import { DecimalPipe } from '@angular/common'
-import { Component, QueryList, ViewChildren } from '@angular/core'
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core'
 import { Observable } from 'rxjs'
 
 import { ClientService } from '../../services/client'
 
 import { Client } from '../../services/client'
-
+import { NzMessageService } from 'ng-zorro-antd/message'
 import { NgbdSortableHeader, SortEvent } from '../../services/client/sortable.directive'
 
 import { Router } from '@angular/router'
@@ -16,15 +16,22 @@ import { Router } from '@angular/router'
   styleUrls: ['./client-overview-table.component.scss'],
   providers: [ClientService, DecimalPipe],
 })
-export class ClientOverviewTableComponent {
-  clients$: Observable<Client[]>
+export class ClientOverviewTableComponent implements OnInit {
+  clients: Array<any> = []
   total$: Observable<number>
+  showLoading: boolean = false
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>
 
-  constructor(public clientService: ClientService, private router: Router) {
-    this.clients$ = clientService.clients$
+  constructor(
+    public clientService: ClientService,
+    private router: Router,
+    private toast: NzMessageService,
+  ) {
     this.total$ = clientService.total$
+  }
+  ngOnInit() {
+    this.getClient()
   }
 
   onSort({ column, direction }: SortEvent) {
@@ -39,20 +46,21 @@ export class ClientOverviewTableComponent {
     this.clientService.sortDirection = direction
   }
 
-  editClient(client_id): void {
-    this.router.navigate(['/client/edit_client', client_id])
+  getClient() {
+    this.showLoading = true
+    this.clientService.getAllClients().subscribe(({ data }) => {
+      this.showLoading = false
+      this.clients = data
+    })
   }
 
   deleteClient(client_id): void {
     this.clientService.deleteClient(client_id).subscribe(
       res => {
-        alert('Client Deleted Successfully!')
-        this.clientService.init()
-        this.router.navigate(['/'])
+        this.toast.success('Client Deleted Successfully!')
+        this.getClient()
       },
-      error => {
-        console.log(error)
-      },
+      error => {},
     )
   }
 }

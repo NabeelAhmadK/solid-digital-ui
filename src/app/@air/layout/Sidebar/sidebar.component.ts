@@ -116,7 +116,6 @@ export class SidebarComponent {
   }
 
   selectMenuType(e) {
-    console.log(e)
     const { value } = e.target
     this.store.dispatch(
       new SettingsActions.SetStateAction({
