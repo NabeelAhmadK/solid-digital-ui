@@ -89,7 +89,7 @@ export class AddClientFormComponent implements OnInit {
     this.clientService.addClient(this.clientForm.value).subscribe(
       client => {
         this.msg.success('Client Added Successfully!')
-        this.router.navigate(['/'])
+        this.router.navigate(['/client/client_overview'])
       },
       error => {
         // this.errors = error.json().errors;

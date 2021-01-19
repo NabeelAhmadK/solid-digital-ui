@@ -2,6 +2,8 @@ import { DecimalPipe } from '@angular/common'
 import { Component, QueryList, ViewChildren, OnInit, Input } from '@angular/core'
 import { Observable } from 'rxjs'
 
+import { NzMessageService } from 'ng-zorro-antd/message'
+
 import { NgbdSortableHeader, SortEvent } from '../../services/contact-person/sortable.directive'
 
 import { ContactPerson, ContactPersonService } from '../../services/contact-person'
@@ -26,6 +28,7 @@ export class ContactPersonTableComponent implements OnInit {
   constructor(
     public contactPersonService: ContactPersonService,
     private router: Router,
+    private msg: NzMessageService,
     private route: ActivatedRoute,
   ) {
     this.contact_persons$ = contactPersonService.contact_persons$
@@ -57,9 +60,9 @@ export class ContactPersonTableComponent implements OnInit {
   deleteContactPerson(cp_id): void {
     this.contactPersonService.deleteContactPerson(cp_id).subscribe(
       res => {
-        alert('Contact Person Deleted Successfully!')
+        this.msg.success('Contact Person Deleted Successfully!')
         this.contactPersonService.init()
-        this.router.navigate(['/'])
+        this.router.navigate(['/client/client_overview'])
       },
       error => {},
     )

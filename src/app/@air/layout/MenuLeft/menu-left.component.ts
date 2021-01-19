@@ -8,6 +8,8 @@ import { MenuService } from 'src/app/services/menu'
 import * as SettingsActions from 'src/app/store/settings/actions'
 import * as Reducers from 'src/app/store/reducers'
 
+import { environment } from 'src/environments/environment'
+
 @Component({
   selector: 'air-menu-left',
   templateUrl: './menu-left.component.html',
@@ -42,6 +44,7 @@ export class MenuLeftComponent implements OnInit {
   renderedFlyoutItems: object = {}
   flyoutTimers: object = {}
   flyoutActive: boolean = false
+  logoRedirectUrl: string = ''
   objectKeys = Object.keys
 
   constructor(private menuService: MenuService, private store: Store<any>, private router: Router) {
@@ -53,8 +56,10 @@ export class MenuLeftComponent implements OnInit {
   ngOnInit() {
     if (this.isAdmin) {
       this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
+      this.logoRedirectUrl = '/client/client_overview'
     } else {
       this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
+      this.logoRedirectUrl = '/customer/dashboard'
     }
 
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
@@ -80,6 +85,10 @@ export class MenuLeftComponent implements OnInit {
       .subscribe((event: NavigationStart) => {
         this.setActiveItems(event.url ? event.url : null)
       })
+  }
+
+  redirect() {
+    this.router.navigate([this.logoRedirectUrl])  
   }
 
   toggleMobileMenu() {
