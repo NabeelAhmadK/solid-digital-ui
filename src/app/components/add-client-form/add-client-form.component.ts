@@ -89,7 +89,7 @@ export class AddClientFormComponent implements OnInit {
     
     this.clientService.addClient({
       business_name: this.clientForm.value.business_name,	
-      street_number: this.clientForm.value.steet_number,	
+      street_number: this.clientForm.value.street_number,	
       postal_code: this.clientForm.value.postal_code,	
       city: this.clientForm.value.city,	
       phone_number: this.clientForm.value.phone_number,	
