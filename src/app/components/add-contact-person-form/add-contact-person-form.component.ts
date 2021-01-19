@@ -123,14 +123,7 @@ export class AddContactPersonFormComponent implements OnInit {
           this.contactPersonService.addContactPerson(this.contactPersonForm.value).subscribe(
             contact_person => {
               this.msg.success('Contact Person Added Successfully!')
-              this.accountForm.reset({
-                password: 'soliddigital',
-                c_password: 'soliddigital',
-              })
-              this.contactPersonForm.reset({
-                is_account_active: 'No',
-                send_email_invite: '1',
-              })
+              this.router.navigate(['/client/add_contact_person/' + this.client_id])
             },
             error => {
               this.msg.error('Error Adding Contact Person!')

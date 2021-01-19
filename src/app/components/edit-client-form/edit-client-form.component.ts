@@ -113,7 +113,7 @@ export class EditClientFormComponent implements OnInit {
       .updateClient(
         {
           business_name: this.clientForm.value.business_name,
-          street_number: this.clientForm.value.straat_number,
+          street_number: this.clientForm.value.street_number,
           postal_code: this.clientForm.value.postal_code,
           city: this.clientForm.value.city,
           phone_number: this.clientForm.value.phone_number,
