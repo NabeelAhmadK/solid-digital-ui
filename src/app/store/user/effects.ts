@@ -40,12 +40,13 @@ export class UserEffects implements OnInitEffects {
           map(response => {
             if (response && response.data.access_token) {
               store.set('accessToken', response.data.access_token)
-              this.notification.success('Logged In', 'You have successfully logged in!')
 
               if (response.data.user.is_admin) {
                 this.router.navigate(['/client/client_overview'], { replaceUrl: true })
+                this.notification.success('Logged In', 'You have successfully logged in!')
               } else {
                 this.router.navigate(['/customer/dashboard'], { replaceUrl: true })
+                this.notification.success('Logged In', 'You have successfully logged in!')
               }
               return new UserActions.LoadCurrentAccount()
             }

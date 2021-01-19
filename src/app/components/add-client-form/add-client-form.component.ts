@@ -86,7 +86,16 @@ export class AddClientFormComponent implements OnInit {
   saveBusiness(): void {
     this.submitted = true
     if (this.clientForm.invalid) return
-    this.clientService.addClient(this.clientForm.value).subscribe(
+    
+    this.clientService.addClient({
+      business_name: this.clientForm.value.business_name,	
+      street_number: this.clientForm.value.steet_number,	
+      postal_code: this.clientForm.value.postal_code,	
+      city: this.clientForm.value.city,	
+      phone_number: this.clientForm.value.phone_number,	
+      email: this.clientForm.value.email,	
+      logo: this.clientForm.value.logo_filename,
+    }).subscribe(
       client => {
         this.msg.success('Client Added Successfully!')
         this.router.navigate(['/client/client_overview'])
