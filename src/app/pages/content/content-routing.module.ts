@@ -4,28 +4,26 @@ import { AuthGuard } from 'src/app/@air/system/Guard/auth.guard'
 import { LayoutsModule } from 'src/app/layouts/layouts.module'
 
 // content components
-import { ContentOverviewComponent } from 'src/app/pages/content/content-overview/content-overview.component'
-import { AddContentComponent } from 'src/app/pages/content/add-content/add-content.component'
-import { EditContentFormComponent } from 'src/app/components/edit-content-form/edit-content-form.component'
-import { ViewContentComponent } from 'src/app/pages/content/view-content/view-content.component'
-
+import { ContentOverviewComponent } from './content-overview/content-overview.component'
+import { ViewContentComponent } from './view-content/view-content.component'
+import { ContentCrudComponent } from './content-crud/content-crud.component'
 const routes: Routes = [
   {
-    path: 'content_overview',
+    path: 'contents',
     component: ContentOverviewComponent,
-    data: { title: 'Content Overview', breadcrumb: 'Content overview' },
+    data: { title: 'Contents', breadcrumb: 'Contents' },
     canActivate: [AuthGuard],
   },
   {
-    path: 'add_content',
-    component: AddContentComponent,
-    data: { title: 'Add Content', breadcrumb: 'Add content' },
+    path: 'content',
+    component: ContentCrudComponent,
+    data: { title: 'Add Content', breadcrumb: 'Add' },
     canActivate: [AuthGuard],
   },
   {
-    path: 'edit_content/:id',
-    component: EditContentFormComponent,
-    data: { title: 'Edit Content', breadcrumb: 'Edit content' },
+    path: 'content/:contentId',
+    component: ContentCrudComponent,
+    data: { title: 'Edit Content', breadcrumb: 'Add' },
     canActivate: [AuthGuard],
   },
   {
@@ -41,4 +39,4 @@ const routes: Routes = [
   providers: [],
   exports: [RouterModule],
 })
-export class ContentRouterModule {}
+export class ContentRouterModule { }

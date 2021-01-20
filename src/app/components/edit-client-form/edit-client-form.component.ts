@@ -5,7 +5,7 @@ import { UploadChangeParam } from 'ng-zorro-antd/upload'
 import { Client, ClientService } from 'src/app/services/client'
 import { DecimalPipe } from '@angular/common'
 import { Router, ActivatedRoute } from '@angular/router'
-
+import { environment } from 'src/environments/environment'
 @Component({
   selector: 'edit-client-form',
   templateUrl: './edit-client-form.component.html',
@@ -47,7 +47,7 @@ export class EditClientFormComponent implements OnInit {
             city: this.client.city,
             business_email: this.client.email,
           })
-          this.url = 'http://54.220.253.6' + this.client.logo['url']
+          this.url = `${environment.baseUrl}` + this.client.logo['url']
           this.dummy_text = false
         },
         error => {
@@ -125,7 +125,7 @@ export class EditClientFormComponent implements OnInit {
       .subscribe(
         client => {
           this.msg.success('Client Updated Successfully!')
-          this.router.navigate(['/client/client_overview/'])
+          this.router.navigate(['/client-management/clients/'])
         },
         error => {
           // this.errors = error.json().errors;
@@ -138,7 +138,7 @@ export class EditClientFormComponent implements OnInit {
     this.router.navigate(['/client/add_contact_person/' + this.client_id])
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnDestroy() {
     this.sub.unsubscribe()

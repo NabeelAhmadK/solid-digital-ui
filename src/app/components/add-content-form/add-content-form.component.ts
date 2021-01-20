@@ -59,7 +59,7 @@ export class AddContentFormComponent implements OnInit {
       .subscribe(
         contentt => {
           this.msg.success('Content Added Successfully!')
-          this.router.navigate(['/content/content_overview'])
+          this.router.navigate(['/content-management/contents'])
         },
         error => {
           // this.errors = error.json().errors;

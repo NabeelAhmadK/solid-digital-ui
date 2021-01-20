@@ -18,14 +18,14 @@ const routes: Routes = [
     component: LayoutMainComponent,
     children: [
       {
-        path: 'client',
-        data: { breadcrumb: 'Client', role: 'Adminstrator' },
+        path: 'client-management',
+        data: { breadcrumb: 'Client Management', role: 'Adminstrator' },
         canActivate: [AuthGuard],
         loadChildren: () => import('src/app/pages/client/client.module').then(m => m.ClientModule),
       },
       {
-        path: 'content',
-        data: { breadcrumb: 'Content', role: 'Adminstrator' },
+        path: 'content-management',
+        data: { breadcrumb: 'Content Management', role: 'Adminstrator' },
         canActivate: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/content/content.module').then(m => m.ContentModule),
@@ -70,4 +70,4 @@ const routes: Routes = [
   providers: [AppPreloader],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

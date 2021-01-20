@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import * as UserActions from 'src/app/store/user/actions'
 import * as Reducers from 'src/app/store/reducers'
-
+import { environment } from 'src/environments/environment'
 @Component({
   selector: 'air-topbar-user-menu',
   templateUrl: './user-menu.component.html',
@@ -16,6 +16,8 @@ export class TopbarUserMenuComponent {
   phone: string = ''
   profile_image: string = ''
 
+
+
   constructor(private store: Store<any>) {
     this.store.pipe(select(Reducers.getUser)).subscribe(state => {
       this.name = state.name
@@ -25,7 +27,7 @@ export class TopbarUserMenuComponent {
         this.role = 'Contact Person'
       }
       this.email = state.email
-      this.profile_image = 'http://54.220.253.6' + state?.profile_image?.url
+      this.profile_image = `${environment.baseUrl}` + state?.profile_image?.url
     })
   }
 

@@ -56,7 +56,7 @@ export class MenuLeftComponent implements OnInit {
   ngOnInit() {
     if (this.isAdmin) {
       this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
-      this.logoRedirectUrl = '/client/client_overview'
+      this.logoRedirectUrl = '/client-management/clients'
     } else {
       this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
       this.logoRedirectUrl = '/customer/dashboard'

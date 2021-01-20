@@ -5,8 +5,8 @@
 
   <div class="row">
     <div class="col-xl-12 col-lg-12">
-      <div class="card"> 
-        <div class="card-body"> 
+      <div class="card">
+        <div class="card-body">
 
           <div class="row">
             <div class="col-10">
@@ -14,7 +14,8 @@
             </div>
             <div class="col-2">
 
-              <button [routerLink]="'/content/add_content'" class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
+              <button [routerLink]="'/content-management/content'"
+                class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-plus"></i>
                 </span>
@@ -24,16 +25,59 @@
             </div>
           </div>
 
-          <div class="row"> 
+          <div class="row">
             <div class="col-12">
-              <content-overview-table>
-              </content-overview-table>
+              <nz-spin [nzSpinning]="showLoading">
+                <form>
+
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Content Name</th>
+                        <th scope="col">Content Type</th>
+                        <th scope="col" class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let content of contents">
+                        <td scope="row">
+                          <ngb-highlight [result]="content.name"></ngb-highlight>
+                        </td>
+                        <td scope="row">
+                          <ngb-highlight [result]="content.type"></ngb-highlight>
+                        </td>
+                        <td scope="row" class="text-center">
+                          <button type="button" class="btn btn-sm btn-outline-success mr-2"
+                            (click)="editContent(content.id)">Edit</button>
+                          <button type="button" class="btn btn-sm btn-outline-danger ml-2 mr-2"
+                            (click)="deleteContent(content.id)">Delete</button>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="total$ | async" [(page)]="contentService.page"
+                      [pageSize]="contentService.pageSize">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" name="pageSize"
+                      [(ngModel)]="contentService.pageSize">
+                      <option [ngValue]="2">2 items per page</option>
+                      <option [ngValue]="4">4 items per page</option>
+                      <option [ngValue]="6">6 items per page</option>
+                    </select>
+                  </div> -->
+
+                </form>
+              </nz-spin>
+
             </div>
           </div>
 
-        </div>          
+        </div>
       </div>
     </div>
   </div>
 </div>
-      

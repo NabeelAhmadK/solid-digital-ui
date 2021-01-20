@@ -5,6 +5,7 @@ import { UploadChangeParam } from 'ng-zorro-antd/upload'
 import { ContactPerson, ContactPersonService } from 'src/app/services/contact-person'
 import { DecimalPipe } from '@angular/common'
 import { Router, ActivatedRoute } from '@angular/router'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'edit-contact-person-form',
@@ -69,7 +70,7 @@ export class EditContactPersonFormComponent implements OnInit {
           this.msg.success('Profile Image Uploaded SuccessFully')
           this.profileImage = profile_image['name']
         },
-        error => {},
+        error => { },
       )
     }
   }
@@ -92,7 +93,7 @@ export class EditContactPersonFormComponent implements OnInit {
       .subscribe(
         contact_person => {
           this.msg.success('Contact Person Updated Successfully!')
-          this.router.navigate(['/client/client_overview'])
+          this.router.navigate(['/client-management/clients'])
         },
         error => {
           this.msg.error('Error Updating Contact Person!')
@@ -123,13 +124,13 @@ export class EditContactPersonFormComponent implements OnInit {
         this.Populate(data)
         this.getUserbyID(data.user_account_id)
       },
-      error => {},
+      error => { },
     )
   }
 
   getUserbyID(id) {
     this.contactPersonService.getUserbyId(id).subscribe(({ data }) => {
-      if (data.profile_image) this.url = 'http://54.220.253.6' + data.profile_image.url
+      if (data.profile_image) this.url = data.profile_image.url
       if (data.profile_image && data.profile_image.url) this.dummy_text = false
 
       this.userAccounts = data

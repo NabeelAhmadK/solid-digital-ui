@@ -61,7 +61,7 @@ export class EditContentFormComponent implements OnInit {
       .subscribe(
         content => {
           this.msg.success('Content Updated Successfully!')
-          this.router.navigate(['/content/content_overview'])
+          this.router.navigate(['/content-management/contents'])
         },
         error => {
           // this.errors = error.json().errors;

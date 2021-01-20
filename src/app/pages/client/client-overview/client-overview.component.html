@@ -2,10 +2,9 @@
   <div class="air__utils__heading">
     <h5><strong>Client overview</strong></h5>
   </div>
-
   <div class="row">
     <div class="col-xl-12 col-lg-12">
-      <div class="card"> 
+      <div class="card">
         <div class="card-body">
 
           <div class="row">
@@ -14,7 +13,8 @@
             </div>
             <div class="col-2">
 
-              <button [routerLink]="'/client/add_client'" class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
+              <button [routerLink]="'/client-management/client'"
+                class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-user-plus"></i>
                 </span>
@@ -24,16 +24,59 @@
             </div>
           </div>
 
-          <div class="row"> 
+          <div class="row">
             <div class="col-12">
-              <client-overview-table>
-              </client-overview-table>
+              <nz-spin [nzSpinning]="showLoading">
+                <form>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Portal Access</th>
+                        <th scope="col" class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let client of clients">
+                        <td scope="row">
+                          <ngb-highlight [result]="client.business_name">
+                          </ngb-highlight>
+                        </td>
+                        <td scope="row">
+                          <div *ngFor="let cp of client.contact_person; let $isLast=last">
+                            {{cp.first_name + ' ' + cp.last_name}}<span *ngIf="!$isLast">, </span>
+                          </div>
+                        </td>
+                        <td scope="row" class="text-center">
+                          <a type="button" class="btn btn-sm btn-success mr-1"
+                            [routerLink]="['/client/edit_client', client.id]"><i class="fa fa-pencil"></i> Edit</a>
+                          <button type="button" class="btn btn-sm btn-danger ml-1 mr-1"
+                            (click)="deleteClient(client.id)"><i class="fa fa-trash"></i> Delete</button>
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="total$ | async" [(page)]="clientService.page"
+                      [pageSize]="clientService.pageSize">
+                    </ngb-pagination>
+
+                    <select class="custom-select" style="width: auto" name="pageSize"
+                      [(ngModel)]="clientService.pageSize">
+                      <option [ngValue]="2">2 items per page</option>
+                      <option [ngValue]="4">4 items per page</option>
+                      <option [ngValue]="6">6 items per page</option>
+                    </select>
+                  </div> -->
+
+                </form>
+              </nz-spin>
             </div>
           </div>
-
-        </div>          
+        </div>
       </div>
     </div>
   </div>
 </div>
-      

@@ -62,7 +62,7 @@ export class ContactPersonTableComponent implements OnInit {
       res => {
         this.msg.success('Contact Person Deleted Successfully!')
         this.contactPersonService.init()
-        this.router.navigate(['/client/client_overview'])
+        this.router.navigate(['/client-management/clients'])
       },
       error => {},
     )

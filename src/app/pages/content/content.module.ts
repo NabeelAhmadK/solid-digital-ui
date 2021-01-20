@@ -14,26 +14,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import 'd3'
 import 'nvd3'
 
-// content module components
-import { ContentOverviewComponent } from 'src/app/pages/content/content-overview/content-overview.component'
-import { ContentOverviewTableComponent } from 'src/app/components/content-overview-table/content-overview-table.component'
-
-import { AddContentComponent } from 'src/app/pages/content/add-content/add-content.component'
-import { AddContentFormComponent } from 'src/app/components/add-content-form/add-content-form.component'
-
-import { EditContentFormComponent } from 'src/app/components/edit-content-form/edit-content-form.component'
-
-import { ViewContentComponent } from 'src/app/pages/content/view-content/view-content.component'
-import { ViewContentEmailComponent } from 'src/app/components/view-content-email/view-content-email.component'
+// content components
+import { ContentOverviewComponent } from './content-overview/content-overview.component'
+import { ContentCrudComponent } from './content-crud/content-crud.component';
 
 const COMPONENTS = [
-  AddContentComponent,
-  AddContentFormComponent,
-  EditContentFormComponent,
   ContentOverviewComponent,
-  ContentOverviewTableComponent,
-  ViewContentEmailComponent,
-  ViewContentComponent,
+  ContentCrudComponent
 ]
 
 @NgModule({
@@ -52,6 +39,6 @@ const COMPONENTS = [
     CommonModule,
   ],
   declarations: [...COMPONENTS],
-  bootstrap: [ContentOverviewTableComponent],
+  bootstrap: [],
 })
-export class ContentModule {}
+export class ContentModule { }

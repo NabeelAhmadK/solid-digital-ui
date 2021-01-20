@@ -42,7 +42,7 @@ export class UserEffects implements OnInitEffects {
               store.set('accessToken', response.data.access_token)
 
               if (response.data.user.is_admin) {
-                this.router.navigate(['/client/client_overview'], { replaceUrl: true })
+                this.router.navigate(['/client-management/clients'], { replaceUrl: true })
                 this.notification.success('Logged In', 'You have successfully logged in!')
               } else {
                 this.router.navigate(['/customer/dashboard'], { replaceUrl: true })

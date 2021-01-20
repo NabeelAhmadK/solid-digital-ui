@@ -12,12 +12,12 @@ export const getAdminMenuData: any[] = [
       {
         title: 'Client Overview',
         key: 'client_overview',
-        url: '/client/client_overview',
+        url: '/client-management/clients',
       },
       {
         title: 'Add Client',
         key: 'add_client',
-        url: '/client/add_client',
+        url: '/client-management/client',
       },
     ],
   },
@@ -29,12 +29,12 @@ export const getAdminMenuData: any[] = [
       {
         title: 'Content Overview',
         key: 'content_overview',
-        url: '/content/content_overview',
+        url: '/content-management/contents',
       },
       {
         title: 'Add Content',
         key: 'add_content',
-        url: '/content/add_content',
+        url: '/content-management/content',
       },
     ],
   },

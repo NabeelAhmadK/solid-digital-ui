@@ -12,14 +12,14 @@ import { EditClientFormComponent } from 'src/app/components/edit-client-form/edi
 
 const routes: Routes = [
   {
-    path: 'add_client',
+    path: 'client',
     component: AddClientComponent,
     data: { title: 'Add Client', breadcrumb: 'Add client' },
     canActivate: [AuthGuard],
   },
   {
-    path: 'edit_client/:id',
-    component: EditClientFormComponent,
+    path: 'client/:clientId',
+    component: AddClientComponent,
     data: { title: 'Edit Client', breadcrumb: 'Edit client' },
     canActivate: [AuthGuard],
   },
@@ -36,9 +36,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'client_overview',
+    path: 'clients',
     component: ClientOverviewComponent,
-    data: { title: 'Client Overview', breadcrumb: 'Client overview' },
+    data: { title: 'Clients', breadcrumb: 'Client overview' },
     canActivate: [AuthGuard],
   },
 ]
@@ -48,4 +48,4 @@ const routes: Routes = [
   providers: [],
   exports: [RouterModule],
 })
-export class ClientRouterModule {}
+export class ClientRouterModule { }

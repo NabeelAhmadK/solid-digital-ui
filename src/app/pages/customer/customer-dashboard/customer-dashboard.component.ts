@@ -3,6 +3,7 @@ import { ClientService } from '../../../services/client/index'
 import { select, Store } from '@ngrx/store'
 import * as UserActions from 'src/app/store/user/actions'
 import * as Reducers from 'src/app/store/reducers'
+import { environment } from 'src/environments/environment'
 @Component({
   selector: 'customer-dashboard',
   templateUrl: './customer-dashboard.component.html',
@@ -23,7 +24,7 @@ export class CustomerDashboardComponent implements OnInit {
 
   getClient() {
     this.clientService.getClient(this.clientId).subscribe(({ data }) => {
-      this.url = 'http://54.220.253.6' + data?.logo?.url
+      this.url = `${environment.baseUrl}` + data?.logo?.url
     })
   }
 }
