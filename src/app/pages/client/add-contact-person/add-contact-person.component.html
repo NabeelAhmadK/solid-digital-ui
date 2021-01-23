@@ -4,18 +4,109 @@
   </div>
   <div class="row">
     <div class="col-xl-12 col-lg-12">
-
       <div class="card">
-        <div class="card-body">      
+        <div class="card-body">
           <h5 class="mb-4">
             <strong>Contact person details</strong>
           </h5>
-          <add-contact-person-form>
-          </add-contact-person-form>
-        </div>          
+          <form nz-form [nzLayout]="'vertical'" [formGroup]="contactPersonForm">
+            <div class="row">
+              <div class="col-md-9 col-xs-12">
+                <div class="row">
+                  <div class="col-6">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="First Name" id="first_name" formControlName="first_name" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="contactPersonForm.controls.first_name" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-6">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Last Name" id="last_name" formControlName="last_name" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="contactPersonForm.controls.last_name" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Email Address" type="email" id="email" formControlName="email" />
+                        <input nz-input type="checkbox" id="send_email_invite" formControlName="send_email_invite"
+                          value="1" />
+                        <nz-form-label nzFor="send_email_invite" class="ml-2">Send Email Invite ?</nz-form-label>
+                      </nz-form-control>
+                      <app-validation-popover [control]="contactPersonForm.controls.email" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-6">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Mobile Number" id="mobile_number"
+                          formControlName="mobile_number" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="contactPersonForm.controls.mobile_number" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <nz-form-item>
+                      <nz-form-label nzFor="is_account_active">Active Account</nz-form-label>
+                      <nz-form-control>
+                        <nz-select name="select-validate" [ngModel]="'No'" [nzSize]="'large'" class="select-input"
+                          id="is_account_active" formControlName="is_account_active">
+                          <nz-option nzValue="Yes" nzLabel="Yes" class="select-label"></nz-option>
+                          <nz-option nzValue="No" nzLabel="No" class="select-label"></nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-xs-12  d-flex flex-column justify-content-center align-items-center">
+                <div class="upload-profile-image">
+                  <div id="profile-image-space">
+                    <img src="url" id="profile-image" [src]="url" *ngIf="url" />
+                    <h4 class="text-center text-blue mt-5" *ngIf="dummy_text">Profile Image</h4>
+                  </div>
+                  <nz-form-item>
+                    <span class="btn btn-primary btn-file">
+                      <i nz-icon nzType="upload"></i> Upload <input type="file" (change)="handleChange($event)"
+                        formControlName="profile_image"> </span>
+                    <app-validation-popover [control]="contactPersonForm.controls.profile_image" [show]="submitted">
+                    </app-validation-popover>
+                  </nz-form-item>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div [ngClass]="{'col-12': contactPersonId, 'col-6': !contactPersonId}">
+                <nz-form-item>
+                  <button type="button" (click)="contactPersonId ? UpdateContactPerson() : Submit()"
+                    class="btn btn-primary save-btn">
+                    <strong>{{contactPersonId ? 'Update' : 'Save'}}</strong>
+                  </button>
+                </nz-form-item>
+              </div>
+              <div [ngClass]="{'col-12': contactPersonId, 'col-6': !contactPersonId}" *ngIf="!contactPersonId">
+                <nz-form-item>
+                  <button type="button" class="btn btn-primary save-btn" (click)="SaveandAddOther();">
+                    <strong>Save & Add Another</strong>
+                  </button>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-
     </div>
   </div>
 </div>
-      

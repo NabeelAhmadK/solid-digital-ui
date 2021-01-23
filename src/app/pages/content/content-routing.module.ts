@@ -17,13 +17,13 @@ const routes: Routes = [
   {
     path: 'content',
     component: ContentCrudComponent,
-    data: { title: 'Add Content', breadcrumb: 'Add' },
+    data: { title: 'Add Content', breadcrumb: 'Add Content' },
     canActivate: [AuthGuard],
   },
   {
     path: 'content/:contentId',
     component: ContentCrudComponent,
-    data: { title: 'Edit Content', breadcrumb: 'Add' },
+    data: { title: 'Edit Content', breadcrumb: 'Edit Content' },
     canActivate: [AuthGuard],
   },
   {
