@@ -88,7 +88,7 @@ export class MenuLeftComponent implements OnInit {
   }
 
   redirect() {
-    this.router.navigate([this.logoRedirectUrl])  
+    this.router.navigate([this.logoRedirectUrl])
   }
 
   toggleMobileMenu() {

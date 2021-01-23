@@ -17,17 +17,17 @@
   air__menuFlyout__gray: flyoutMenuColor === 'gray' && menuType !== 'default'
 }">
   <div class="air__menuLeft__outer">
-    <a href="javascript: void(0);" class="air__menuLeft__mobileToggleButton" (click)="toggleMobileMenu()">
+    <a class="air__menuLeft__mobileToggleButton" (click)="toggleMobileMenu()">
       <span></span>
     </a>
-    <!-- <a href="javascript: void(0);" class="air__menuLeft__toggleButton" (click)="toggleMenu()">
+    <!-- <a  class="air__menuLeft__toggleButton" (click)="toggleMenu()">
       <span></span>
       <span></span>
     </a> -->
-    <a  [routerLink]="logoRedirectUrl" class="air__menuLeft__logo">
-        <!-- <div class="air__menuLeft__logo__letter">SD</div> -->
-        <div class="air__menuLeft__logo__name"><img src="/assets/images/logo.svg" class="logo-img" /></div>
-        <!-- <div class="air__menuLeft__logo__descr">{{description}}</div> -->
+    <a [routerLink]="logoRedirectUrl" class="air__menuLeft__logo">
+      <!-- <div class="air__menuLeft__logo__letter">SD</div> -->
+      <div class="air__menuLeft__logo__name"><img src="/assets/images/logo.svg" class="logo-img" /></div>
+      <!-- <div class="air__menuLeft__logo__descr">{{description}}</div> -->
     </a>
 
     <perfect-scrollbar>
@@ -43,7 +43,7 @@
     </perfect-scrollbar>
   </div>
 </div>
-<a href="javascript: void(0);" class="air__menuLeft__backdrop" (click)="toggleMobileMenu()"></a>
+<a class="air__menuLeft__backdrop" (click)="toggleMobileMenu()"></a>
 
 <ng-template #itemTpl let-item>
   <ng-container *ngIf="!item.children && !item.category">
@@ -60,8 +60,7 @@
   <ng-container *ngIf="item.children">
     <li class="air__menuLeft__item air__menuLeft__submenu"
       [ngClass]="{air__menuLeft__submenu__active: item.key === activeSubmenu}">
-      <a href="javascript: void(0);" class="air__menuLeft__link" (click)="handleSubmenuClick(item.key)"
-        (mouseenter)="handleFlyoutOver($event, item.key, item.children)" (mouseleave)="handleFlyoutOut(item.key)">
+      <a class="air__menuLeft__link" (click)="handleSubmenuClick(item.key)">
         <i *ngIf="item.icon" class="air__menuLeft__icon" [ngClass]="item.icon"></i>
         <span>{{ item.title }}</span>
         <span *ngIf="item.count" class="badge text-white bg-blue-light float-right mt-1 px-2">{{ item.count }}</span>
@@ -92,8 +91,7 @@
     air__menuFlyout__white: flyoutMenuColor === 'white',
     air__menuFlyout__gray: flyoutMenuColor === 'gray'
   }">
-    <ul class="air__menuLeft__list" (mouseenter)="handleFlyoutContainerOver(item.key)"
-      (mouseleave)="handleFlyoutOut(item.key)">
+    <ul class="air__menuLeft__list">
       <ng-container *ngFor="let item of item.items">
         <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit: item}"></ng-container>
       </ng-container>
