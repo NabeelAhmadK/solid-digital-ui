@@ -139,8 +139,8 @@ export class ContentService {
     return this.http.post(API_URL + '/contents', content, { headers: this.headers })
   }
 
-  public updateContent(content, id) {
-    return this.http.put(`${API_URL}/contents/${id}`, content, { headers: this.headers })
+  public updateContent(content) {
+    return this.http.put(`${API_URL}/contents/${content.id}`, content, { headers: this.headers })
   }
 
   public deleteContent(id): Observable<any> {

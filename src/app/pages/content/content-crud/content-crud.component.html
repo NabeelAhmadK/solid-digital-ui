@@ -1,3 +1,66 @@
-<p>
-  content-crud works!
-</p>
+<div>
+  <div class="air__utils__heading">
+    <h5><strong>{{contentId ? 'Edit' : 'Add'}} Content</strong></h5>
+  </div>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="mb-4">
+            <strong>Contact details</strong>
+          </h5>
+          <form nz-form [nzLayout]="'verical'" [formGroup]="contentForm">
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Content Name" id="name" formControlName="name" />
+                <app-validation-popover [control]="contentForm.controls.name" [show]="submitted">
+                </app-validation-popover>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <nz-select style="width: 100%" ngSize="large" nzPlaceHolder="Please select content type"
+                  class="select-input" id="type" formControlName="type">
+                  <nz-option *ngFor="let option of contentTypes" [nzLabel]="option.label" [nzValue]="option.value"
+                    class="select-label">
+                  </nz-option>
+                </nz-select>
+                <app-validation-popover [control]="contentForm.controls.type" [show]="submitted">
+                </app-validation-popover>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeholder="Email Subject" id="subject" formControlName="subject" />
+                <app-validation-popover [control]="contentForm.controls.subject" [show]="submitted">
+                </app-validation-popover>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label>Content</nz-form-label>
+              <div id="content_editor">
+                <quill-editor [style]="{height: '50px'}" formControlName="html"></quill-editor>
+                <app-validation-popover [control]="contentForm.controls.html" [show]="submitted">
+                </app-validation-popover>
+              </div>
+            </nz-form-item>
+            <div class="pull-right">
+              <nz-form-item>
+                <a class="btn btn-lg btn-info  text-nowrap save-btn" [routerLink]="['/content-management/contents']">
+                  Cancel
+                </a>
+                <button class="btn btn-lg btn-primary ml-2 btn-with-addon text-nowrap save-btn" type="submit"
+                  (click)="Submit()">
+                  <span class="btn-addon">
+                    <i class="btn-addon-icon fe fe-save"></i>
+                  </span>
+                  {{contentId ? 'Update' : 'Save'}}
+                </button>
+              </nz-form-item>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -148,7 +148,7 @@ export class ClientService {
     return this.http.get<CustomResponse>(URI, { headers: this.headers })
   }
 
-  public addClient(client) {
+  public saveClient(client) {
     return this.http.post(API_URL + '/clients', client, { headers: this.headers })
   }
 
@@ -156,8 +156,8 @@ export class ClientService {
     return this.http.post(API_URL + '/clients/media', logo, { headers: this.headers })
   }
 
-  public updateClient(client, id) {
-    return this.http.put(`${API_URL}/clients/${id}`, client, { headers: this.headers })
+  public updateClient(payload: any) {
+    return this.http.put(`${API_URL}/clients/${payload.id}`, payload, { headers: this.headers })
   }
 
   public deleteClient(id): Observable<any> {

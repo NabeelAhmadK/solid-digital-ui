@@ -151,7 +151,7 @@ export class ContactPersonService {
     this.getAllContactPersons().subscribe(response => {
       all_contact_persons = response.data
 
-      contact_persons_wrt_client_id = all_contact_persons.filter(function(cp) {
+      contact_persons_wrt_client_id = all_contact_persons.filter(function (cp) {
         return cp.client_id == client_id
       })
     })
@@ -164,8 +164,9 @@ export class ContactPersonService {
     return this.http.get<CustomResponse>(URI, { headers: this.headers })
   }
 
-  public addContactPerson(contact_person) {
+  public addContactPerson(contact_person): Observable<any> {
     return this.http.post(API_URL + '/contact-people', contact_person, { headers: this.headers })
+
   }
 
   public registerUserAccount(user_account) {

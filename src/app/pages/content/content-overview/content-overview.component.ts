@@ -21,7 +21,9 @@ export class ContentOverviewComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.GetContents()
+  }
 
   GetContents() {
     this.showLoading = true
