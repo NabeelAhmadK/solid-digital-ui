@@ -119,8 +119,7 @@ export class EditClientFormComponent implements OnInit {
           phone_number: this.clientForm.value.phone_number,
           email: this.clientForm.value.business_email,
           logo: this.clientForm.value.logo_filename,
-        },
-        this.client_id,
+        }
       )
       .subscribe(
         client => {

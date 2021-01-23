@@ -13,7 +13,6 @@ export class TopbarUserMenuComponent {
   name: string = ''
   role: string = ''
   email: string = ''
-  phone: string = ''
   profile_image: string = ''
 
 

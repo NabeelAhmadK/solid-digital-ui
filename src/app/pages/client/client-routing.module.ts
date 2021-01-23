@@ -24,14 +24,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'add_contact_person/:id',
+    path: 'contact-persion',
     component: AddContactPersonComponent,
     data: { title: 'Add Contact Person', breadcrumb: 'Add contact person' },
     canActivate: [AuthGuard],
   },
   {
-    path: 'edit_contact_person/:id',
-    component: EditContactPersonFormComponent,
+    path: 'contact-persion/:contactPersonId',
+    component: AddContactPersonComponent,
     data: { title: 'Edit Contact Person', breadcrumb: 'Edit contact person' },
     canActivate: [AuthGuard],
   },

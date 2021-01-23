@@ -55,8 +55,7 @@ export class EditContentFormComponent implements OnInit {
           type: this.contentForm.value.content_type,
           html: this.contentForm.value.content_html,
           subject: this.contentForm.value.content_email_subject,
-        },
-        this.id,
+        }
       )
       .subscribe(
         content => {

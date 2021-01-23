@@ -5,43 +5,149 @@
   <div class="row">
     <div class="col-xl-12 col-lg-12">
       <div class="card">
-        <div class="card-body">      
+        <div class="card-body">
           <h5 class="mb-4">
             <strong>Company details</strong>
           </h5>
-          <add-client-form>
-          </add-client-form>
-        </div>          
+          <form nz-form [nzLayout]="'vertical'" [formGroup]="clientForm">
+            <div class="row">
+              <div class="col-md-9 col-xs-12">
+                <div class="row">
+                  <div class="col-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Business Name" id="business_name"
+                          formControlName="business_name" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="clientForm.controls.business_name" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Street + Number" id="straat_number"
+                          formControlName="street_number" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="clientForm.controls.street_number" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Postal Code" id="postal_code" formControlName="postal_code" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="clientForm.controls.postal_code" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-6">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="City" id="city" formControlName="city" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="clientForm.controls.city" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Phone Number" id="phone_number" formControlName="phone_number" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="clientForm.controls.phone_number" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input placeholder="Business Email" id="business_email" formControlName="email" />
+                      </nz-form-control>
+                      <app-validation-popover [control]="clientForm.controls.email" [show]="submitted">
+                      </app-validation-popover>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-xs-12 d-flex flex-column justify-content-center align-items-center">
+                <div class="upload-logo">
+                  <div id="logo-space">
+                    <img src="url" id="logo-image" [src]="url" *ngIf="url" />
+                    <h4 class="text-center text-blue mt-5" *ngIf="dummy_text">Client Logo</h4>
+                  </div>
+                  <nz-form-item>
+                    <span class="btn btn-primary btn-file">
+                      <i nz-icon nzType="upload"></i> Upload <input type="file" (change)="handleChange($event)"> </span>
+                    <app-validation-popover [control]="clientForm.controls.logo" [show]="submitted">
+                    </app-validation-popover>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div class="col-12 mt-2">
+                <nz-form-item>
+                  <button (click)="Submit()" type="button" class="btn btn-md btn-primary save-btn">
+                    <strong>Submit</strong>
+                  </button>
+                </nz-form-item>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-
-      <!-- <div class="card">
-        <div class="card-body">      
-
+      <div class="card" *ngIf="clientId">
+        <div class="card-body">
           <div class="row">
             <div class="col-10">
               <h5><strong>Contact person</strong></h5>
             </div>
             <div class="col-2">
-  
-              <button [routerLink]="'/client/add_contact_person'" class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
+              <a class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn"
+                [routerLink]="['/client-management/contact-persion']" [queryParams]="{ clientId: clientId}">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-user-plus"></i>
                 </span>
                 <strong>Add Contact Person</strong>
-              </button>
-  
+              </a>
             </div>
           </div>
-  
-          <div class="row"> 
-            <div class="col-12">
-              <contact-person-table>
-              </contact-person-table>
-            </div>
-          </div>
-        </div> 
-      </div> -->
 
+          <form>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Full Name</th>
+                  <th scope="col" class="text-center">Has Access</th>
+                  <th scope="col" class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contactPerson of contactPersons">
+                  <td scope="row">
+                    <ngb-highlight [result]="contactPerson.first_name">
+                    </ngb-highlight>
+                  </td>
+                  <td scope="row" class="text-center">
+                    <ngb-highlight [result]="contactPerson.is_account_active"></ngb-highlight>
+                  </td>
+                  <td scope="row" class="text-center">
+                    <a type="button" class="btn btn-sm btn-outline-success mr-2"
+                      [routerLink]="['/client-management/contact-persion', contactPerson.id]"
+                      [queryParams]="{ clientId: clientId}">Edit</a>
+                    <button type="button" class="btn btn-sm btn-outline-danger ml-2 mr-2"
+                      (click)="deleteContactPerson(contactPerson.id)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>
