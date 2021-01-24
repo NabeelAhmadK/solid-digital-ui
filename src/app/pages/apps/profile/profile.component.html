@@ -3,20 +3,21 @@
     <div class="col-xl-4 col-lg-12">
       <div class="card">
         <div class="card-body">
-          <kit-general-10v1></kit-general-10v1>
-        </div>
-      </div>
-      <div class="card text-white bg-primary">
-        <kit-general-12v1></kit-general-12v1>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <kit-general-1></kit-general-1>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <kit-list-19></kit-list-19>
+          <div class="d-flex flex-wrap flex-column align-items-center">
+            <div class="kit__utils__avatar kit__utils__avatar--size64 mb-3">
+              <img [src]="profileImageUrl" [attr.alt]="userData?.name" />
+            </div>
+            <div class="text-center">
+              <div class="text-dark font-weight-bold font-size-18">{{userData?.name}}</div>
+              <div class="text-uppercase font-size-12 mb-3">{{userData?.email}}</div>
+              <button type="button" class="btn btn-primary btnWithAddon mb-2" disabled>
+                <span class="btnAddon">
+                  <i class="btnAddonIcon fe fe-user"></i>
+                </span>
+                {{userData?.is_admin ? 'Admin' : 'Contact Person'}}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -25,48 +26,34 @@
         <div class="card-header card-header-flex flex-column">
           <div class="d-flex flex-wrap border-bottom pt-3 pb-4 mb-3">
             <div class="mr-5">
-              <div class="text-dark font-size-18 font-weight-bold">David Beckham</div>
-              <div class="text-gray-6">@david100</div>
-            </div>
-            <div class="mr-5 text-center">
-              <div class="text-dark font-size-18 font-weight-bold">100</div>
-              <div class="text-gray-6">Posts</div>
-            </div>
-            <div class="mr-5 text-center">
-              <div class="text-dark font-size-18 font-weight-bold">17,256</div>
-              <div class="text-gray-6">Followers</div>
+              <div class="text-dark font-size-18 font-weight-bold">{{userData?.name}}</div>
+              <div class="text-gray-6">{{userData?.email}}</div>
             </div>
           </div>
           <nz-tabset class="kit-tabs kit-tabs-bold" (nzSelectedIndexChange)="changeKey($event)">
-            <nz-tab nzTitle="Agent Wall"></nz-tab>
-            <nz-tab nzTitle="Messages"></nz-tab>
+
             <nz-tab nzTitle="Settings"></nz-tab>
           </nz-tabset>
         </div>
         <div class="card-body">
-          <div *ngIf="activeKey === 0">
-            <kit-general-15></kit-general-15>
-            <kit-general-15></kit-general-15>
-          </div>
-          <kit-general-14 *ngIf="activeKey === 1"></kit-general-14>
-          <form nz-form [nzLayout]="'vertical'" *ngIf="activeKey === 2">
+          <form nz-form [nzLayout]="'vertical'" [formGroup]="profileForm">
             <h5 class="text-black mt-2 mb-3">
               <strong>Personal Information</strong>
             </h5>
             <div class="row">
               <div class="col-lg-6">
                 <nz-form-item>
-                  <nz-form-label nzFor="userName">Username:</nz-form-label>
+                  <nz-form-label nzFor="userName">User Name:</nz-form-label>
                   <nz-form-control>
-                    <input nz-input placeholder="Username" id="userName">
+                    <input nz-input placeholder="Enter Name" id="userName" formControlName="name">
                   </nz-form-control>
                 </nz-form-item>
               </div>
               <div class="col-lg-6">
                 <nz-form-item>
-                  <nz-form-label nzFor="email">Email:</nz-form-label>
+                  <nz-form-label nzFor="email">Email :</nz-form-label>
                   <nz-form-control>
-                    <input nz-input placeholder="Email" id="email">
+                    <input nz-input placeholder="Enter Email" id="email" formControlName="email">
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -77,41 +64,37 @@
             <div class="row">
               <div class="col-lg-6">
                 <nz-form-item>
-                  <nz-form-label nzFor="password">Password:</nz-form-label>
+                  <nz-form-label nzFor="password">Password :</nz-form-label>
                   <nz-form-control>
-                    <input nz-input placeholder="Password" id="password">
+                    <input nz-input placeholder="Enter Password" id="password" formControlName="password">
                   </nz-form-control>
                 </nz-form-item>
               </div>
               <div class="col-lg-6">
                 <nz-form-item>
-                  <nz-form-label nzFor="confPassword">Confirm Password:</nz-form-label>
+                  <nz-form-label nzFor="confPassword">Confirm Password :</nz-form-label>
                   <nz-form-control>
-                    <input nz-input placeholder="Confirm password" id="confPassword">
+                    <input nz-input placeholder="Enter Confirm password" id="confPassword" formControlName="c_password">
                   </nz-form-control>
                 </nz-form-item>
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-md-12 col-xs-12 d-flex flex-column justify-content-center align-items-center">
                 <h5 class="text-black mt-2 mb-3">
                   <strong>Profile Avatar</strong>
                 </h5>
-                <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                  <button nz-button>
-                    <i nz-icon type="upload"></i><span>Click to Upload</span>
-                  </button>
-                </nz-upload>
-              </div>
-              <div class="col-lg-6">
-                <h5 class="text-black mt-2 mb-3">
-                  <strong>Profile Background</strong>
-                </h5>
-                <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
-                  <button nz-button>
-                    <i nz-icon type="upload"></i><span>Click to Upload</span>
-                  </button>
-                </nz-upload>
+                <div class="upload-logo">
+                  <div id="logo-space">
+                    <img id="logo-image" [src]="profileImageUrl" *ngIf="profileImageUrl" />
+                    <h4 class="text-center text-blue mt-5" *ngIf="!profileImageUrl">Profile Avatar</h4>
+                  </div>
+                  <nz-form-item>
+                    <span class="btn btn-primary btn-file">
+                      <i nz-icon nzType="upload"></i> Upload <input type="file" (change)="handleChange($event)"> </span>
+
+                  </nz-form-item>
+                </div>
               </div>
             </div>
             <div class="form-actions">
