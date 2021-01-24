@@ -20,7 +20,7 @@ export class UserEffects implements OnInitEffects {
     private route: ActivatedRoute,
     private rxStore: Store<any>,
     private notification: NzNotificationService,
-  ) {}
+  ) { }
 
   ngrxOnInitEffects(): Action {
     return { type: UserActions.LOAD_CURRENT_ACCOUNT }
@@ -40,12 +40,13 @@ export class UserEffects implements OnInitEffects {
           map(response => {
             if (response && response.data.access_token) {
               store.set('accessToken', response.data.access_token)
+              store.set('userData', response.data.user)
 
               if (response.data.user.is_admin) {
-                this.router.navigate(['/client-management/clients'], { replaceUrl: true })
+                this.router.navigate(['/pages/client-management/clients'], { replaceUrl: true })
                 this.notification.success('Logged In', 'You have successfully logged in!')
               } else {
-                this.router.navigate(['/customer/dashboard'], { replaceUrl: true })
+                this.router.navigate(['/pages/customer/dashboard'], { replaceUrl: true })
                 this.notification.success('Logged In', 'You have successfully logged in!')
               }
               return new UserActions.LoadCurrentAccount()
@@ -138,6 +139,7 @@ export class UserEffects implements OnInitEffects {
         return this.jwtAuthService.logout().pipe(
           map(() => {
             store.remove('accessToken')
+            store.remove('userData')
             this.notification.success('Logged Out', 'You have successfully logged out!')
             this.router.navigate(['/auth/login'])
             return new UserActions.FlushUser()

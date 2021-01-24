@@ -3,12 +3,13 @@ import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import store from 'store'
-
+import { select, Store } from '@ngrx/store'
+import * as Reducers from 'src/app/store/reducers'
 @Injectable()
 export class jwtAuthService {
   public base_url = environment.baseUrl
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private storeValue: Store<any>,) { }
 
   login(email: string, password: string): Observable<any> {
     let params = new URLSearchParams()
@@ -46,10 +47,10 @@ export class jwtAuthService {
     const accessToken = store.get('accessToken')
     const params = accessToken
       ? {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
       : {}
 
     return this.http.get(this.base_url + '/api/auth/account', params)
@@ -59,10 +60,10 @@ export class jwtAuthService {
     const accessToken = store.get('accessToken')
     const params = accessToken
       ? {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
       : {}
 
     return this.http.get(this.base_url + '/api/auth/logout', params)
@@ -75,4 +76,12 @@ export class jwtAuthService {
 
     return this.http.post(this.base_url + '/api/auth/forgot', payload)
   }
+
+  isAuthenticated() {
+    if(localStorage.getItem('accessToken') != null) {
+      return true;
+    }
+    return false;
+  }
+
 }
