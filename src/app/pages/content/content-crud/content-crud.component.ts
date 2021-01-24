@@ -79,7 +79,7 @@ export class ContentCrudComponent implements OnInit {
   }
 
   navigateTolistings() {
-    this.router.navigate(['/content-management/contents'])
+    this.router.navigate(['/pages/content-management/contents'])
   }
 
   getContentbyId(contentId: any) {

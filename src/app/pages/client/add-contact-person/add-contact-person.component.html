@@ -98,7 +98,7 @@
               </div>
               <div [ngClass]="{'col-12': contactPersonId, 'col-6': !contactPersonId}" *ngIf="!contactPersonId">
                 <nz-form-item>
-                  <button type="button" class="btn btn-primary save-btn" (click)="SaveandAddOther();">
+                  <button type="button" class="btn btn-primary save-btn" (click)="Submit(true)">
                     <strong>Save & Add Another</strong>
                   </button>
                 </nz-form-item>

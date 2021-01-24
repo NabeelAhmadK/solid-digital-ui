@@ -13,7 +13,7 @@
             </div>
             <div class="col-2">
 
-              <button [routerLink]="'/client-management/client'"
+              <button [routerLink]="'/pages/client-management/client'"
                 class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-user-plus"></i>
@@ -49,7 +49,7 @@
                         </td>
                         <td scope="row" class="text-center">
                           <a type="button" class="btn btn-sm btn-success mr-1"
-                            [routerLink]="['/client-management/client', client.id]"><i class="fa fa-pencil"></i> Edit</a>
+                            [routerLink]="['/pages/client-management/client', client.id]"><i class="fa fa-pencil"></i> Edit</a>
                           <button type="button" class="btn btn-sm btn-danger ml-1 mr-1"
                             (click)="deleteClient(client.id)"><i class="fa fa-trash"></i> Delete</button>
                         </td>

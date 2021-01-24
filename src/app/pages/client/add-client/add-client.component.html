@@ -108,7 +108,7 @@
             </div>
             <div class="col-2">
               <a class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn"
-                [routerLink]="['/client-management/contact-persion']" [queryParams]="{ clientId: clientId}">
+                [routerLink]="['/pages/client-management/contact-persion']" [queryParams]="{ clientId: clientId}">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-user-plus"></i>
                 </span>
@@ -137,7 +137,7 @@
                   </td>
                   <td scope="row" class="text-center">
                     <a type="button" class="btn btn-sm btn-outline-success mr-2"
-                      [routerLink]="['/client-management/contact-persion', contactPerson.id]"
+                      [routerLink]="['/pages/client-management/contact-persion', contactPerson.id]"
                       [queryParams]="{ clientId: clientId}">Edit</a>
                     <button type="button" class="btn btn-sm btn-outline-danger ml-2 mr-2"
                       (click)="deleteContactPerson(contactPerson.id)">Delete</button>

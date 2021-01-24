@@ -76,7 +76,7 @@ export class AddContactPersonComponent implements OnInit {
 
   }
 
-  Submit(): void {
+  Submit(addOther: boolean = false): void {
     this.submitted = true;
     if (this.contactPersonForm.invalid) return
 
@@ -96,7 +96,7 @@ export class AddContactPersonComponent implements OnInit {
 
         if (user_account && user_account_id) {
           this.contactPersonForm.get('user_account_id').patchValue(user_account_id)
-          this.addContactPerson();
+          this.addContactPerson(addOther);
         } else {
           this.toast.error('Error Adding Contact Person!')
         }
@@ -109,11 +109,27 @@ export class AddContactPersonComponent implements OnInit {
     )
   }
 
-  addContactPerson() {
+  addContactPerson(addOther?: boolean) {
     this.contactPersonService.addContactPerson(this.contactPersonForm.value).subscribe(
       contact_person => {
         this.toast.success('Contact Person Added Successfully!')
-        this.router.navigate(['/client-management/clients'])
+        if (!addOther)
+          this.router.navigate(['/pages/client-management/client', this.clientId]);
+        else {
+          this.accountForm.reset({
+            password: 'soliddigital',
+            c_password: 'soliddigital',
+            profile_image: 'soliddigital',
+          });
+          this.contactPersonForm.reset({
+            is_account_active: 'No',
+            send_email_invite: '1',
+          });
+          this.submitted = false;
+          this.url = null;
+          this.dummy_text = true;
+        }
+
       },
       error => {
         this.toast.error('Error Adding Contact Person!')
@@ -131,8 +147,8 @@ export class AddContactPersonComponent implements OnInit {
       roles: [2]
     }
 
-    if (this.contactPersonForm.get('profile_image').value)
-      payload['profile_image'] = this.accountForm.get('profile_image').value
+    // if (this.contactPersonForm.get('profile_image').value)
+    //   payload['profile_image'] = this.accountForm.get('profile_image').value
 
     this.contactPersonService
       .updateProfileImage(payload, this.contactPersonForm.get('user_account_id').value)
@@ -145,7 +161,7 @@ export class AddContactPersonComponent implements OnInit {
       .subscribe(
         contact_person => {
           this.toast.success('Contact Person Updated Successfully!')
-          this.router.navigate(['/client-management/clients'])
+          this.router.navigate(['/pages/client-management/client', this.clientId]);
         },
         error => {
           this.toast.error('Error Updating Contact Person!')
@@ -168,7 +184,13 @@ export class AddContactPersonComponent implements OnInit {
 
   getUserbyID(id) {
     this.contactPersonService.getUserbyId(id).subscribe(({ data }) => {
-      if (data.profile_image) this.url = environment.baseUrl + data.profile_image.url
+      if (data.profile_image) {
+        this.url = environment.baseUrl + data.profile_image.url
+        this.contactPersonForm.get('profile_image').setValidators(null);
+        this.contactPersonForm.get('profile_image').updateValueAndValidity();
+
+
+      }
       if (data.profile_image && data.profile_image.url) this.dummy_text = false
 
       this.userAccounts = data

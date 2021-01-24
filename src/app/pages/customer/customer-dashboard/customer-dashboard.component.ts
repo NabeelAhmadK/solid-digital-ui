@@ -13,13 +13,17 @@ import { environment } from 'src/environments/environment'
 export class CustomerDashboardComponent implements OnInit {
   url: any
   clientId: any
-  constructor(private clientService: ClientService, private store: Store<any>) {
-    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
-      this.clientId = state?.is_contact_person?.client_id
-    })
+  constructor(private clientService: ClientService) {
+
   }
   ngOnInit() {
-    this.getClient()
+
+    let userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      this.clientId = userData?.is_contact_person?.client_id
+      this.getClient()
+
+    }
   }
 
   getClient() {

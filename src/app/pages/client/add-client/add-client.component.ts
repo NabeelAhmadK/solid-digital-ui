@@ -94,7 +94,7 @@ export class AddClientComponent implements OnInit {
   }
 
   navigateTolistings() {
-    this.router.navigate(['/client-management/clients'], { replaceUrl: true })
+    this.router.navigate(['/pages/client-management/clients'], { replaceUrl: true })
   }
 
   Populate(client) {

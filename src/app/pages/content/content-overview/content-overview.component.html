@@ -14,7 +14,7 @@
             </div>
             <div class="col-2">
 
-              <button [routerLink]="'/content-management/content'"
+              <button [routerLink]="'/pages/content-management/content'"
                 class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-plus"></i>
@@ -48,7 +48,7 @@
                         </td>
                         <td scope="row" class="text-center">
                           <a type="button" class="btn btn-sm btn-outline-success mr-2"
-                            [routerLink]="['/content-management/content', content.id]">Edit</a>
+                            [routerLink]="['/pages/content-management/content', content.id]">Edit</a>
                           <button type="button" class="btn btn-sm btn-outline-danger ml-2 mr-2"
                             (click)="deleteContent(content.id)">Delete</button>
                         </td>
