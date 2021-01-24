@@ -24,7 +24,7 @@
       </li>
       <li nz-menu-divider></li>
       <li nz-menu-item>
-        <a href="javascript: void(0);">
+        <a [routerLink]="['/pages/profile-page/user-profile']" routerLinkActive="router-link-active" >
           <i class="menuIcon fe fe-user"></i>
           {{ 'topBar.profileMenu.editProfile' | translate }}
         </a>

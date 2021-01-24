@@ -26,9 +26,10 @@ import { environment } from 'src/environments/environment'
 export class MenuLeftComponent implements OnInit {
   logo: string
   description: string
-  menuData: any = []
+  menuData: Array<any> = []
   isMobileView: boolean
   isMobileMenuOpen: boolean
+  showLoading: boolean
   isMenuCollapsed: boolean
   isMenuUnfixed: boolean
   isMenuShadow: boolean
@@ -48,19 +49,23 @@ export class MenuLeftComponent implements OnInit {
   objectKeys = Object.keys
 
   constructor(private menuService: MenuService, private store: Store<any>, private router: Router) {
-    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
-      this.isAdmin = state.is_admin
-    })
+
   }
 
   ngOnInit() {
-    if (this.isAdmin) {
-      this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
-      this.logoRedirectUrl = '/client-management/clients'
-    } else {
-      this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
-      this.logoRedirectUrl = '/customer/dashboard'
-    }
+    this.showLoading = true;
+    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
+      this.isAdmin = state.is_admin
+      this.showLoading = false;
+      if (this.isAdmin) {
+        this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
+        this.logoRedirectUrl = '/pages/client-management/clients'
+      } else {
+        this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
+        this.logoRedirectUrl = '/pages/customer/dashboard'
+      }
+    })
+
 
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
       this.logo = state.logo
