@@ -25,6 +25,8 @@ export class AddClientComponent implements OnInit {
   method: any;
   clientForm: FormGroup;
   dummy_text: boolean = true;
+  showLoading: boolean = false;
+  showLoadingContactPerson: boolean = false;
   submitted: boolean = false;
   url: any;
 
@@ -60,17 +62,21 @@ export class AddClientComponent implements OnInit {
   }
 
   getContactPersons(clientId: any) {
+    this.showLoadingContactPerson = true;
     this.contactPersonService.getAllContactPersons().subscribe(({ data }) => {
       this.contactPersons = data.filter(function (cp) {
         return cp.client_id == clientId
       })
+      this.showLoadingContactPerson = false;
     })
   }
 
   getClientbyId(clientId: any) {
+    this.showLoading = true;
     this.clientService.getClient(clientId)
       .subscribe(({ data }) => {
         this.Populate(data);
+        this.showLoading = false;
       })
   }
 
@@ -106,6 +112,7 @@ export class AddClientComponent implements OnInit {
     })
 
     if (client.logo && ('url' in client.logo)) {
+      this.dummy_text = false;
       this.url = environment.baseUrl + client.logo.url
     }
   }
