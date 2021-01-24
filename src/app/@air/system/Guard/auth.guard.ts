@@ -29,14 +29,18 @@ export class AuthGuard implements CanLoad, CanActivateChild, CanActivate, Resolv
 
   canLoad(route: Route, segments: UrlSegment[],): boolean | Observable<boolean> | Promise<boolean> {
 
-    console.log('can load', this.authService.isAuthenticated())
-    if (this.authService.isAuthenticated()) return true;
+
+    let userObj = JSON.parse(localStorage.getItem('userData'));
+    let routeRole = route.data.role;
+    let userRole = userObj.is_admin ? 'Admin' : 'Contact';
+
+    if (routeRole == userRole) return true;
+    else if(routeRole == 'All') return true;
     else {
-      console.log('Not authenticated, redirecting and adding redirect url...');
-      this.router.navigate(['/auth/login'], {
-        replaceUrl: true,
-      });
-      return false;
+      this.router.navigate(['/404'], {
+        replaceUrl: true
+      })
+      return false
     }
   }
 
@@ -50,7 +54,6 @@ export class AuthGuard implements CanLoad, CanActivateChild, CanActivate, Resolv
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
 
-    console.log('can active childe', this.authService.isAuthenticated())
     if (this.authService.isAuthenticated()) return true;
     else {
       console.log('Not authenticated, redirecting and adding redirect url...');
@@ -64,7 +67,6 @@ export class AuthGuard implements CanLoad, CanActivateChild, CanActivate, Resolv
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
-    console.log('can active', this.authService.isAuthenticated())
     if (this.authService.isAuthenticated()) return true;
     else {
       console.log('Not authenticated, redirecting and adding redirect url...');

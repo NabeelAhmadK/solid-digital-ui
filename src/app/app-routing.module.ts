@@ -14,6 +14,7 @@ import { LayoutCustomerComponent } from 'src/app/layouts/Customer/customer.compo
 const routes: Routes = [
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
   { path: 'auth/login', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '404', redirectTo: '/auth/404', pathMatch: 'full' },
   {
     path: 'pages',
     component: LayoutMainComponent,
@@ -21,20 +22,20 @@ const routes: Routes = [
     children: [
       {
         path: 'client-management',
-        data: { breadcrumb: 'Client Management', role: 'Adminstrator' },
+        data: { breadcrumb: 'Client Management', role: 'Admin' },
         canLoad: [AuthGuard],
         loadChildren: () => import('src/app/pages/client/client.module').then(m => m.ClientModule),
       },
       {
         path: 'content-management',
-        data: { breadcrumb: 'Content Management', role: 'Adminstrator' },
+        data: { breadcrumb: 'Content Management', role: 'Admin' },
         canLoad: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/content/content.module').then(m => m.ContentModule),
       },
       {
         path: 'profile-page',
-        data: { breadcrumb: 'Profile', role: 'Adminstrator' },
+        data: { breadcrumb: 'Profile', role: 'All' },
         canLoad: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/apps/apps.module').then(m => m.AppsModule),
@@ -48,7 +49,7 @@ const routes: Routes = [
     children: [
       {
         path: 'customer',
-        data: { breadcrumb: 'Customer', role: 'Adminstrator' },
+        data: { breadcrumb: 'Customer', role: 'Contact' },
         canLoad: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/customer/customer.module').then(m => m.CustomerModule),

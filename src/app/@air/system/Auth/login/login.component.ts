@@ -17,6 +17,7 @@ export class LoginComponent {
   loading: boolean = false
 
   constructor(private fb: FormBuilder, private store: Store<any>) {
+    localStorage.clear()
     this.form = fb.group({
       email: ['', [Validators.required, Validators.minLength(4)]],
       password: ['', [Validators.required]],
