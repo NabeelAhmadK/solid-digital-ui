@@ -93,7 +93,7 @@ export class EditContactPersonFormComponent implements OnInit {
       .subscribe(
         contact_person => {
           this.msg.success('Contact Person Updated Successfully!')
-          this.router.navigate(['/client-management/clients'])
+          this.router.navigate(['/pages/client-management/clients'])
         },
         error => {
           this.msg.error('Error Updating Contact Person!')

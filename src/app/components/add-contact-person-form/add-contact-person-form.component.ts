@@ -163,7 +163,7 @@ export class AddContactPersonFormComponent implements OnInit {
           this.contactPersonService.addContactPerson(this.contactPersonForm.value).subscribe(
             contact_person => {
               this.msg.success('Contact Person Added Successfully!')
-              this.router.navigate(['/client-management/clients'])
+              this.router.navigate(['/pages/client-management/clients'])
             },
             error => {
               this.msg.error('Error Adding Contact Person!')

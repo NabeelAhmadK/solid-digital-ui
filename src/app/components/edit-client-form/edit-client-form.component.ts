@@ -124,7 +124,7 @@ export class EditClientFormComponent implements OnInit {
       .subscribe(
         client => {
           this.msg.success('Client Updated Successfully!')
-          this.router.navigate(['/client-management/clients/'])
+          this.router.navigate(['/pages/client-management/clients/'])
         },
         error => {
           // this.errors = error.json().errors;
