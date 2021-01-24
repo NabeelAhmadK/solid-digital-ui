@@ -7,79 +7,72 @@ import {
   UrlTree,
   Route,
   UrlSegment,
+  CanActivateChild,
+  CanLoad,
+  Resolve,
 } from '@angular/router'
 import { Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 import { select, Store } from '@ngrx/store'
 import * as Reducers from 'src/app/store/reducers'
-
+import { jwtAuthService } from '../../../services/jwt'
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanLoad, CanActivateChild, CanActivate, Resolve<any> {
   authorized: boolean
   userObj: any
   role: any
 
-  constructor(private store: Store<any>, public router: Router) {
-    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
-      this.authorized = state.authorized
-      this.userObj = state
-      this.role = state.role
-    })
+  constructor(private authService: jwtAuthService, public router: Router) {
   }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (environment.authenticated) {
-      let url: string = state.url
-      return this.checkUserLogin(next, url)
-    }
+  canLoad(route: Route, segments: UrlSegment[],): boolean | Observable<boolean> | Promise<boolean> {
 
-    if (this.authorized) {
-      let url: string = state.url
-      return this.checkUserLogin(next, url)
-    } else {
-      this.router.navigate(['auth/login'], {
-        queryParams: { returnUrl: state.url },
-        replaceUrl: false,
-      })
-      return false
+    console.log('can load', this.authService.isAuthenticated())
+    if (this.authService.isAuthenticated()) return true;
+    else {
+      console.log('Not authenticated, redirecting and adding redirect url...');
+      this.router.navigate(['/auth/login'], {
+        replaceUrl: true,
+      });
+      return false;
     }
   }
 
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    return true
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    throw new Error('Method not implemented.')
   }
 
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.canActivate(next, state)
-  }
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot,
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true
-  }
 
-  checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
-    if (this.userObj) {
-      const userRole = this.role
-      if (route.data.role && route.data.role.indexOf(userRole) === -1) {
-        this.router.navigate(['/customer/dashboard'])
-        return false
-      }
-      return true
+
+    console.log('can active childe', this.authService.isAuthenticated())
+    if (this.authService.isAuthenticated()) return true;
+    else {
+      console.log('Not authenticated, redirecting and adding redirect url...');
+      this.router.navigate(['/auth/login'], {
+        queryParams: { redirect: state.url },
+        replaceUrl: true,
+      });
+      return false;
     }
+  }
 
-    this.router.navigate(['/customer/dashboard'])
-    return false
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+
+    console.log('can active', this.authService.isAuthenticated())
+    if (this.authService.isAuthenticated()) return true;
+    else {
+      console.log('Not authenticated, redirecting and adding redirect url...');
+      this.router.navigate(['/auth/login'], {
+        queryParams: { redirect: state.url },
+        replaceUrl: true,
+      });
+      return false;
+    }
   }
 }

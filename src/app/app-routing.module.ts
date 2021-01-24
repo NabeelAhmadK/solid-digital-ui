@@ -13,33 +13,43 @@ import { LayoutCustomerComponent } from 'src/app/layouts/Customer/customer.compo
 
 const routes: Routes = [
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: 'auth/login', redirectTo: '/auth/login', pathMatch: 'full' },
   {
-    path: '',
+    path: 'pages',
     component: LayoutMainComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'client-management',
         data: { breadcrumb: 'Client Management', role: 'Adminstrator' },
-        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
         loadChildren: () => import('src/app/pages/client/client.module').then(m => m.ClientModule),
       },
       {
         path: 'content-management',
         data: { breadcrumb: 'Content Management', role: 'Adminstrator' },
-        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/content/content.module').then(m => m.ContentModule),
+      },
+      {
+        path: 'profile-page',
+        data: { breadcrumb: 'Profile', role: 'Adminstrator' },
+        canLoad: [AuthGuard],
+        loadChildren: () =>
+          import('src/app/pages/apps/apps.module').then(m => m.AppsModule),
       },
     ],
   },
   {
-    path: '',
+    path: 'pages',
     component: LayoutCustomerComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'customer',
         data: { breadcrumb: 'Customer', role: 'Adminstrator' },
-        canActivate: [AuthGuard],
+        canLoad: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/customer/customer.module').then(m => m.CustomerModule),
       },
