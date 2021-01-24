@@ -45,17 +45,20 @@ export class MenuTopComponent implements OnInit {
   isAdmin: Boolean
 
   constructor(private menuService: MenuService, private store: Store<any>, private router: Router) {
-    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
-      this.isAdmin = state.is_admin
-    })
+
   }
 
   ngOnInit() {
+
+    let userObj = JSON.parse(localStorage.getItem('userData'));
+    this.isAdmin = userObj.is_admin;
+
     if (this.isAdmin) {
       this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
     } else {
       this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
     }
+
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
       this.logo = state.logo
       this.description = state.description

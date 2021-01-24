@@ -54,17 +54,17 @@ export class MenuLeftComponent implements OnInit {
 
   ngOnInit() {
     this.showLoading = true;
-    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
-      this.isAdmin = state.is_admin
-      this.showLoading = false;
-      if (this.isAdmin) {
-        this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
-        this.logoRedirectUrl = '/pages/client-management/clients'
-      } else {
-        this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
-        this.logoRedirectUrl = '/pages/customer/dashboard'
-      }
-    })
+    let userObj = JSON.parse(localStorage.getItem('userData'));
+
+    this.isAdmin = userObj.is_admin
+    this.showLoading = false;
+    if (this.isAdmin) {
+      this.menuService.getAdminMenuData().subscribe(menuData => (this.menuData = menuData))
+      this.logoRedirectUrl = '/pages/client-management/clients'
+    } else {
+      this.menuService.getCustomerMenuData().subscribe(menuData => (this.menuData = menuData))
+      this.logoRedirectUrl = '/pages/customer/dashboard'
+    }
 
 
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {

@@ -12,7 +12,7 @@ import { ForgotPasswordPage } from './forgot-password/forgot-password.component'
 import { Error500Page } from './500/500.component'
 import { Error404Page } from './404/404.component'
 
-import { ConfirmAccountComponent } from 'src/app/pages/auth/confirm-account/confirm-account.component'
+import { ConfirmAccountComponent } from 'src/app/pages/auth/reset-password/confirm-account.component'
 import { ConfirmAccountFormComponent } from 'src/app/components/confirm-account-form/confirm-account-form.component'
 
 const COMPONENTS = [

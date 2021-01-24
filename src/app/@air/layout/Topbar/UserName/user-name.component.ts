@@ -12,8 +12,7 @@ export class TopbarUserNameComponent {
   user_name: string = ''
 
   constructor(private store: Store<any>) {
-    this.store.pipe(select(Reducers.getUser)).subscribe(state => {
-      this.user_name = state.name
-    })
+    let userObj = JSON.parse(localStorage.getItem('userData'));
+    this.user_name = userObj.name;
   }
 }

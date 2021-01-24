@@ -186,6 +186,12 @@ export class ContactPersonService {
     })
   }
 
+  public updateUser(payload) {
+    return this.http.put(API_URL + `/users/${payload.id}`, payload, {
+      headers: this.headers,
+    })
+  }
+
   public updateContactPerson(contact_person, id) {
     return this.http.put(`${API_URL}/contact-people/${id}`, contact_person, {
       headers: this.headers,

@@ -9,7 +9,7 @@ import { LockscreenPage } from 'src/app/pages/auth/lockscreen/lockscreen.compone
 import { ForgotPasswordPage } from 'src/app/pages/auth/forgot-password/forgot-password.component'
 import { Error500Page } from 'src/app/pages/auth/500/500.component'
 import { Error404Page } from 'src/app/pages/auth/404/404.component'
-import { ConfirmAccountComponent } from 'src/app/pages/auth/confirm-account/confirm-account.component'
+import { ConfirmAccountComponent } from 'src/app/pages/auth/reset-password/confirm-account.component'
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
     data: { title: 'Sign Up' },
   },
   {
-    path: 'confirm_account',
+    path: 'reset-password/:token',
     component: ConfirmAccountComponent,
     data: { title: 'Confirm Account' },
   },

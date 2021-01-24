@@ -26,6 +26,15 @@ export class jwtAuthService {
     })
   }
 
+  resetPassword(payload: any) {
+    let headers = new HttpHeaders({
+      'Content-type': 'application/json',
+    })
+    return this.http.post(this.base_url + '/api/auth/reset', payload, {
+      headers: headers
+    })
+  }
+
   register(email: string, password: string, name: string): Observable<any> {
     let params = new URLSearchParams()
 
@@ -78,7 +87,7 @@ export class jwtAuthService {
   }
 
   isAuthenticated() {
-    if(localStorage.getItem('accessToken') != null) {
+    if (localStorage.getItem('accessToken') != null) {
       return true;
     }
     return false;
