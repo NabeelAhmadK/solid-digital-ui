@@ -46,4 +46,8 @@ export class AppsProfileComponent implements OnInit {
       }
     })
   }
+
+  handleChange(event) {
+    
+  }
 }
