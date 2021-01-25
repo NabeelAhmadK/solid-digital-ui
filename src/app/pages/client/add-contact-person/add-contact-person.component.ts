@@ -61,7 +61,7 @@ export class AddContactPersonComponent implements OnInit {
       client_id: [null],
       email: [null, [Validators.required, ValidationService.emailValidator]],
       is_account_active: ['No'],
-      send_email_invite: ['1'],
+      send_email_invite: [true],
       profile_image: [null, Validators.required],
       profile_image_name: [null],
     })

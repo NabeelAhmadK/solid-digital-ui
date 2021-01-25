@@ -77,7 +77,8 @@ export class LoginComponent {
         } else this.toast.warning('Auth Failed', response.message)
       },
         error => {
-          this.toast.error('Login Failed', 'Invalid Credentials!')
+          console.log(error)
+          this.toast.error('Login Failed', error.error.message)
         })
   }
 
