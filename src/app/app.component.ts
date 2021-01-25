@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import qs from 'qs'
-import { Router, NavigationEnd, ActivatedRoute, NavigationStart } from '@angular/router'
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router'
 import { Title } from '@angular/platform-browser'
 import { filter, map, mergeMap } from 'rxjs/operators'
 import { select, Store } from '@ngrx/store'
@@ -23,14 +23,12 @@ const locales = {
 
 @Component({
   selector: 'app-root',
-  template: `
-    <ng-progress></ng-progress>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   _locale: String
   _theme: String
+  showLoading: boolean = true;
 
   constructor(
     private router: Router,
@@ -55,6 +53,10 @@ export class AppComponent implements OnInit {
       this._locale = state.locale
       this._theme = state.theme
     })
+
+    router.events.subscribe((event: RouterEvent) => {
+      this.navigationInterceptor(event);
+    });
   }
 
   ngOnInit() {
@@ -180,6 +182,25 @@ export class AppComponent implements OnInit {
     }
     primaryColor()
   }
+
+  // Shows and hides the loading spinner during RouterEvent changes
+  navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.showLoading = true;
+    }
+    if (event instanceof NavigationEnd) {
+      this.showLoading = false;
+    }
+
+    // Set loading state to false in both of the below events to hide the spinner in case a request fails
+    if (event instanceof NavigationCancel) {
+      this.showLoading = false;
+    }
+    if (event instanceof NavigationError) {
+      this.showLoading = false;
+    }
+  }
+
 
   setTheme = theme => {
     document.querySelector('html').setAttribute('data-kit-theme', theme)

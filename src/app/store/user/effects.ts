@@ -140,7 +140,7 @@ export class UserEffects implements OnInitEffects {
           map(() => {
             store.remove('accessToken')
             store.remove('userData')
-            this.notification.success('Logged Out', 'You have successfully logged out!')
+            // this.notification.success('Logged Out', 'You have successfully logged out!')
             this.router.navigate(['/auth/login'])
             return new UserActions.FlushUser()
           }),

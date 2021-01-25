@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import * as SettingsActions from 'src/app/store/settings/actions'
@@ -11,7 +11,9 @@ import { slideFadeinUp, slideFadeinRight, zoomFadein, fadein } from '../router-a
   templateUrl: './main.component.html',
   animations: [slideFadeinUp, slideFadeinRight, zoomFadein, fadein],
 })
+
 export class LayoutMainComponent {
+
   settings$: Observable<any>
   menuLayoutType: string
   isContentMaxWidth: boolean
@@ -25,7 +27,7 @@ export class LayoutMainComponent {
   isGrayTopbar: boolean
   routerAnimation: string
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>, router: Router) {
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
       this.menuLayoutType = state.menuLayoutType
       this.isContentMaxWidth = state.isContentMaxWidth
@@ -39,7 +41,9 @@ export class LayoutMainComponent {
       this.isGrayTopbar = state.isGrayTopbar
       this.routerAnimation = state.routerAnimation
     })
+
   }
+
 
   routeAnimation(outlet: RouterOutlet, animation: string) {
     if (animation === this.routerAnimation) {

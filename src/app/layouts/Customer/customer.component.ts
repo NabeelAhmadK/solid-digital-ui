@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router'
 import { select, Store } from '@ngrx/store'
 import { Observable } from 'rxjs'
 import * as SettingsActions from 'src/app/store/settings/actions'
@@ -25,7 +25,7 @@ export class LayoutCustomerComponent {
   isGrayTopbar: boolean
   routerAnimation: string
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>, router: Router) {
     this.store.pipe(select(Reducers.getSettings)).subscribe(state => {
       this.menuLayoutType = state.menuLayoutType
       this.isContentMaxWidth = state.isContentMaxWidth
@@ -39,6 +39,7 @@ export class LayoutCustomerComponent {
       this.isGrayTopbar = state.isGrayTopbar
       this.routerAnimation = state.routerAnimation
     })
+
   }
 
   routeAnimation(outlet: RouterOutlet, animation: string) {
@@ -46,4 +47,5 @@ export class LayoutCustomerComponent {
       return outlet.isActivated && outlet.activatedRoute.routeConfig.path
     }
   }
+
 }

@@ -6,7 +6,7 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module'
 // content components
 import { ContentOverviewComponent } from './content-overview/content-overview.component'
 import { ViewContentComponent } from './view-content/view-content.component'
-import { ContentCrudComponent } from './content-crud/content-crud.component'
+import { ContentCrudComponent } from './content-crud/content-crud.component';
 const routes: Routes = [
   {
     path: 'contents',

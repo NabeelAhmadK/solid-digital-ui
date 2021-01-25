@@ -9,6 +9,8 @@ import { NgProgressModule } from '@ngx-progressbar/core'
 import { NgProgressRouterModule } from '@ngx-progressbar/router'
 import { NgProgressHttpModule } from '@ngx-progressbar/http'
 
+import { NzSpinModule } from 'ng-zorro-antd/spin'
+
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { StoreModule } from '@ngrx/store'
@@ -36,6 +38,7 @@ registerLocaleData(localeEn, 'en')
   imports: [
     HttpClientModule,
     BrowserModule,
+    NzSpinModule,
     BrowserAnimationsModule,
     FormsModule,
     AppRoutingModule,

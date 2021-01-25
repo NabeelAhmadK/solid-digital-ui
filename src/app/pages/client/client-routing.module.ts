@@ -7,8 +7,6 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module'
 import { ClientOverviewComponent } from 'src/app/pages/client/client-overview/client-overview.component'
 import { AddClientComponent } from 'src/app/pages/client/add-client/add-client.component'
 import { AddContactPersonComponent } from 'src/app/pages/client/add-contact-person/add-contact-person.component'
-import { EditContactPersonFormComponent } from 'src/app/components/edit-contact-person-form/edit-contact-person-form.component'
-import { EditClientFormComponent } from 'src/app/components/edit-client-form/edit-client-form.component'
 
 const routes: Routes = [
   {
