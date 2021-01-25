@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'contents',
     component: ContentOverviewComponent,
-    data: { title: 'Contents', breadcrumb: 'Contents' },
+    data: { title: 'Content overview', breadcrumb: 'Content overview' },
     canActivate: [AuthGuard],
   },
   {
