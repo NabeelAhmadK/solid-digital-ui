@@ -21,14 +21,18 @@ export class CustomerDashboardComponent implements OnInit {
     let userData = JSON.parse(localStorage.getItem('userData'));
     if (userData) {
       this.clientId = userData?.is_contact_person?.client_id
-      this.getClient()
+      this.getClient(this.clientId)
 
     }
   }
 
-  getClient() {
-    this.clientService.getClient(this.clientId).subscribe(({ data }) => {
-      this.url = `${environment.baseUrl}` + data?.logo?.url
+  getClient(clientId) {
+    let payload = {
+      id: this.clientId
+    }
+    this.clientService.getClientLogo(payload).subscribe(({ data }) => {
+      if (data.logo)
+        this.url = `${environment.baseUrl}` + data?.logo?.url
     })
   }
 }

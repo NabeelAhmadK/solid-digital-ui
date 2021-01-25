@@ -95,6 +95,14 @@ export class AddClientComponent implements OnInit {
         this.navigateTolistings()
       },
       error => {
+        this.toast.error(error.error.message)
+        let errorObj = error.error.errors
+        Object.keys(errorObj).map(key => {
+          if (key == 'email')
+            this.clientForm.get(key).setErrors({ incorrect: true, emailUniqueError: errorObj[key][0] })
+        })
+        this.submitted = false;
+
       },
     )
   }
@@ -158,8 +166,8 @@ export class AddClientComponent implements OnInit {
     }
   }
 
-  deleteContactPerson(contactPersionId: any): void {
-    this.contactPersonService.deleteContactPerson(contactPersionId).subscribe(
+  deleteContactPerson(contactpersonId: any): void {
+    this.contactPersonService.deleteContactPerson(contactpersonId).subscribe(
       res => {
         this.toast.success('Contact Person Deleted Successfully!');
         this.getContactPersons(this.clientId);

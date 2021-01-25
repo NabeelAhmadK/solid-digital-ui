@@ -11,8 +11,8 @@ import { LockscreenPage } from './lockscreen/lockscreen.component'
 import { ForgotPasswordPage } from './forgot-password/forgot-password.component'
 import { Error500Page } from './500/500.component'
 import { Error404Page } from './404/404.component'
-
-import { ConfirmAccountComponent } from 'src/app/pages/auth/reset-password/confirm-account.component'
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
+import { ResetPasswordComponent } from './reset-password/confirm-account.component'
 import { ConfirmAccountFormComponent } from 'src/app/components/confirm-account-form/confirm-account-form.component'
 
 const COMPONENTS = [
@@ -21,7 +21,9 @@ const COMPONENTS = [
   LockscreenPage,
   ForgotPasswordPage,
   Error500Page,
+  ResetPasswordComponent,
   Error404Page,
+  ConfirmAccountComponent,
   ConfirmAccountComponent,
   ConfirmAccountFormComponent,
 ]

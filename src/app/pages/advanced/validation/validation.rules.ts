@@ -164,7 +164,7 @@ export class ValidationRules {
       !control.value ||
       !control.value.length ||
       control.value.match(
-        /^((\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/g,
+        /^[+]|((\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/g,
       )
     ) {
       return null

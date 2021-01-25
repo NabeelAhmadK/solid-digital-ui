@@ -1,6 +1,6 @@
 <div>
   <div class="air__utils__heading">
-    <h5><strong>Add client</strong></h5>
+    <h5><strong>{{clientId ? 'Edit' : 'Add'}} Client</strong></h5>
   </div>
   <div class="row">
     <div class="col-xl-12 col-lg-12">
@@ -71,7 +71,10 @@
                         <nz-form-control>
                           <input nz-input placeholder="Business Email" id="business_email" formControlName="email" />
                         </nz-form-control>
-                        <app-validation-popover [control]="clientForm.controls.email" [show]="submitted">
+                        <small class="text-danger"
+                          *ngIf="clientForm.controls.email.errors?.emailUniqueError">{{clientForm.controls['email'].errors.emailUniqueError}}</small>
+                        <app-validation-popover [control]="clientForm.controls.email"
+                          *ngIf="!clientForm.controls.email.errors?.emailUniqueError" [show]="submitted">
                         </app-validation-popover>
                       </nz-form-item>
                     </div>
@@ -112,7 +115,7 @@
             </div>
             <div class="col-2">
               <a class="btn btn-md btn-primary btn-with-addon pull-right text-nowrap ac-btn" id="add-client-btn"
-                [routerLink]="['/pages/client-management/contact-persion']" [queryParams]="{ clientId: clientId}">
+                [routerLink]="['/pages/client-management/contact-person']" [queryParams]="{ clientId: clientId}">
                 <span class="btn-addon">
                   <i class="btn-addon-icon fe fe-user-plus"></i>
                 </span>
@@ -133,8 +136,7 @@
                 <tbody>
                   <tr *ngFor="let contactPerson of contactPersons">
                     <td scope="row">
-                      <ngb-highlight [result]="contactPerson.first_name">
-                      </ngb-highlight>
+                      {{contactPerson.first_name}} {{contactPerson.last_name}}
                     </td>
                     <td scope="row" class="text-center">
                       <span class="badge p-2" [ngClass]="{
@@ -147,7 +149,7 @@
                     </td>
                     <td scope="row" class="text-center">
                       <a type="button" class="btn btn-sm btn-outline-success mr-2"
-                        [routerLink]="['/pages/client-management/contact-persion', contactPerson.id]"
+                        [routerLink]="['/pages/client-management/contact-person', contactPerson.id]"
                         [queryParams]="{ clientId: clientId}">Edit</a>
                       <button type="button" class="btn btn-sm btn-outline-danger ml-2 mr-2"
                         (click)="deleteContactPerson(contactPerson.id)">Delete</button>

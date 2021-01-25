@@ -5,7 +5,7 @@
         <div class="card-body">
           <div class="d-flex flex-wrap flex-column align-items-center">
             <div class="kit__utils__avatar kit__utils__avatar--size64 mb-3">
-              <img [src]="originalUrl" [attr.alt]="userData?.name" />
+              <img [src]="originalUrl" [attr.alt]="userData?.name" style="height: 100%;" />
             </div>
             <div class="text-center">
               <div class="text-dark font-weight-bold font-size-18">{{userData?.name}}</div>
@@ -24,7 +24,7 @@
         <div class="card-body" [formGroup]="updatePasswordForm">
           <div class="d-flex flex-wrap flex-column align-items-center">
             <h5 class="text-black mt-2 mb-3">
-              <strong>Update Password</strong>
+              <strong>Change Password</strong>
             </h5>
             <div class="col-lg-12">
 
@@ -50,7 +50,7 @@
 
             </div>
             <div class="form-actions">
-              <button nz-button style="width: 150px;" [nzType]="'primary'" (click)="UpdatePasword();">Update</button>
+              <button nz-button style="width: 150px;" [nzType]="'primary'" (click)="UpdatePasword();">Change</button>
             </div>
           </div>
         </div>
@@ -66,7 +66,6 @@
             </div>
           </div>
           <nz-tabset class="kit-tabs kit-tabs-bold" (nzSelectedIndexChange)="changeKey($event)">
-
             <nz-tab nzTitle="Settings"></nz-tab>
           </nz-tabset>
         </div>
@@ -101,7 +100,7 @@
                 </h5>
                 <div class="upload-logo">
                   <div id="logo-space">
-                    <img id="logo-image" [src]="profileImageUrl" *ngIf="profileImageUrl" />
+                    <img id="logo-image" [src]="profileImageUrl" *ngIf="profileImageUrl" style="height: 100%;" />
                     <h4 class="text-center text-blue mt-5" *ngIf="!profileImageUrl">Profile Avatar</h4>
                   </div>
                   <nz-form-item>

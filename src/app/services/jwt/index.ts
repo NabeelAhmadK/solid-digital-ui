@@ -34,6 +34,14 @@ export class jwtAuthService {
       headers: headers
     })
   }
+  confirmAccount(payload: any) {
+    let headers = new HttpHeaders({
+      'Content-type': 'application/json',
+    })
+    return this.http.post(this.base_url + '/api/auth/confirm', payload, {
+      headers: headers
+    })
+  }
 
   register(email: string, password: string, name: string): Observable<any> {
     let params = new URLSearchParams()
@@ -63,6 +71,19 @@ export class jwtAuthService {
       : {}
 
     return this.http.get(this.base_url + '/api/auth/account', params)
+  }
+
+  changePassword(payload): Observable<any> {
+    const accessToken = store.get('accessToken')
+    const params = accessToken
+      ? {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+      : {}
+
+    return this.http.post(this.base_url + '/api/auth/change', payload, params)
   }
 
   logout(): Observable<any> {

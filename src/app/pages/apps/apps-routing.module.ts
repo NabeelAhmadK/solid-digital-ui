@@ -6,9 +6,9 @@ import { AppsProfileComponent } from './profile/profile.component'
 
 const routes: Routes = [
   {
-    path: 'user-profile',
+    path: 'edit-profile',
     component: AppsProfileComponent,
-    data: { title: 'Profile' },
+    data: { title: 'Edit Profile', breadcrumb: 'Edit Profile' },
     canActivate: [AuthGuard],
   }
 ]

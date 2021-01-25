@@ -1,6 +1,6 @@
 <div>
   <div class="air__utils__heading">
-    <h5><strong>Add contact person</strong></h5>
+    <h5><strong>{{contactPersonId ? 'Edit' : 'Add'}} contact person</strong></h5>
   </div>
   <div class="row">
     <div class="col-xl-12 col-lg-12">
@@ -33,16 +33,19 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-6" style="margin-bottom: -24px;">
                     <nz-form-item>
                       <nz-form-control>
                         <input nz-input placeholder="Email Address" type="email" id="email" formControlName="email" />
-                        <br/>
+                        <small class="text-danger"
+                          *ngIf="contactPersonForm.controls.email.errors?.emailUniqueError">{{contactPersonForm.controls['email'].errors.emailUniqueError}}</small>
+                        <br />
                         <input nz-input type="checkbox" id="send_email_invite" formControlName="send_email_invite"
                           value="1" />
                         <nz-form-label nzFor="send_email_invite" class="ml-2">Send Email Invite ?</nz-form-label>
                       </nz-form-control>
-                      <app-validation-popover [control]="contactPersonForm.controls.email" [show]="submitted">
+                      <app-validation-popover [control]="contactPersonForm.controls.email"
+                        *ngIf="!contactPersonForm.controls.email.errors?.emailUniqueError" [show]="submitted">
                       </app-validation-popover>
                     </nz-form-item>
                   </div>
@@ -60,7 +63,7 @@
                 <div class="row">
                   <div class="col-12">
                     <nz-form-item>
-                      <nz-form-label nzFor="is_account_active">Active Account</nz-form-label>
+                      <nz-form-label nzFor="is_account_active">Is Account Active ?</nz-form-label>
                       <nz-form-control>
                         <nz-select name="select-validate" [ngModel]="'No'" [nzSize]="'large'" class="select-input"
                           id="is_account_active" formControlName="is_account_active">
@@ -75,7 +78,7 @@
               <div class="col-md-3 col-xs-12  d-flex flex-column justify-content-center align-items-center">
                 <div class="upload-profile-image">
                   <div id="profile-image-space" class="d-flex flex-column justify-content-center align-items-center">
-                    <img src="url" id="profile-image" [src]="url" *ngIf="url" />
+                    <img src="url" id="profile-image" [src]="url" *ngIf="url" style="width: 100%;" />
                     <h4 class="text-center text-blue" *ngIf="dummy_text">Profile Image</h4>
                   </div>
                   <nz-form-item>

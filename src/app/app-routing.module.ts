@@ -22,19 +22,19 @@ const routes: Routes = [
     children: [
       {
         path: 'client-management',
-        data: { breadcrumb: 'Client Management', role: 'Admin' },
+        data: { breadcrumb: 'Client', role: 'Admin' },
         canLoad: [AuthGuard],
         loadChildren: () => import('src/app/pages/client/client.module').then(m => m.ClientModule),
       },
       {
         path: 'content-management',
-        data: { breadcrumb: 'Content Management', role: 'Admin' },
+        data: { breadcrumb: 'Content', role: 'Admin' },
         canLoad: [AuthGuard],
         loadChildren: () =>
           import('src/app/pages/content/content.module').then(m => m.ContentModule),
       },
       {
-        path: 'profile-page',
+        path: 'profile',
         data: { breadcrumb: 'Profile', role: 'All' },
         canLoad: [AuthGuard],
         loadChildren: () =>

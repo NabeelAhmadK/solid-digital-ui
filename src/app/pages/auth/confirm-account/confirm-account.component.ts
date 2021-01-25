@@ -6,37 +6,35 @@ import { jwtAuthService } from '../../../services/jwt'
 import { NzMessageService } from 'ng-zorro-antd/message'
 
 @Component({
-  selector: 'reset-account',
+  selector: 'app-confirm-account',
   templateUrl: './confirm-account.component.html',
-  styleUrls: ['./confirm-account.component.scss'],
+  styleUrls: ['./confirm-account.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ConfirmAccountComponent implements OnInit {
 
+  confirmAccountFrom: FormGroup
   token: any;
-  userEmail: any;
   submitted: boolean = false;
-  resetPasswordForm: FormGroup;
+  email: any;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: jwtAuthService,
-    private toast: NzMessageService
-  ) {
+    private toast: NzMessageService) {
     this.route.params.subscribe(({ token, email }) => {
       if (token) {
         this.token = token
       }
-      if (email) {
-        this.userEmail = email
+      if(email) {
+        this.email = email
       }
     })
-
   }
 
   ngOnInit() {
-    this.resetPasswordForm = this.formBuilder.group({
+    this.confirmAccountFrom = this.formBuilder.group({
       password: [null, [Validators.required, Validators.minLength(6)]],
       c_password: [null, [Validators.required]],
       email: [null],
@@ -48,17 +46,17 @@ export class ResetPasswordComponent implements OnInit {
 
   Submit() {
     this.submitted = true;
-    if (this.resetPasswordForm.invalid) return;
+    if (this.confirmAccountFrom.invalid) return;
 
-    this.resetPasswordForm.get('token').setValue(this.token);
-    this.resetPasswordForm.get('email').setValue(this.userEmail);
+    this.confirmAccountFrom.get('token').setValue(this.token);
+    this.confirmAccountFrom.get('email').setValue(this.email);
 
-    let result = this.resetPasswordForm.value;
+    let result = this.confirmAccountFrom.value;
     delete result.c_password;
 
-    this.authService.resetPassword(result)
+    this.authService.confirmAccount(result)
       .subscribe(res => {
-        this.toast.success('Password has been successfully reset');
+        this.toast.success('Account has been Confirmed Successfully');
         this.router.navigate(['/auth/login'], { replaceUrl: true })
       }, err => {
         this.toast.error(err.error.message)

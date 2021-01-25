@@ -1,6 +1,6 @@
 <div>
   <div class="air__utils__heading">
-    <h5><strong>Client overview</strong></h5>
+    <h5><strong>Client Overview</strong></h5>
   </div>
   <div class="row">
     <div class="col-xl-12 col-lg-12">
@@ -48,10 +48,11 @@
                           </div>
                         </td>
                         <td scope="row" class="text-center">
-                          <a type="button" class="btn btn-sm btn-success mr-1"
-                            [routerLink]="['/pages/client-management/client', client.id]"><i class="fa fa-pencil"></i> Edit</a>
-                          <button type="button" class="btn btn-sm btn-danger ml-1 mr-1"
-                            (click)="deleteClient(client.id)"><i class="fa fa-trash"></i> Delete</button>
+                          <a type="button" class="btn btn-sm btn-outline-success mr-1"
+                            [routerLink]="['/pages/client-management/client', client.id]">
+                            Edit</a>
+                          <button type="button" class="btn btn-sm btn-outline-danger ml-1 mr-1"
+                            (click)="deleteClient(client.id)">Delete</button>
                         </td>
 
                       </tr>

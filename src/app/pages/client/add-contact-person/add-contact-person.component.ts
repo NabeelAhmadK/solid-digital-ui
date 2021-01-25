@@ -72,6 +72,7 @@ export class AddContactPersonComponent implements OnInit {
       password: ['soliddigital', Validators.required],
       c_password: ['soliddigital', Validators.required],
       profile_image: ['soliddigital', Validators.required],
+      roles: [[2]]
     })
 
   }
@@ -102,7 +103,8 @@ export class AddContactPersonComponent implements OnInit {
         }
       },
       error => {
-        this.toast.error('Error Adding Contact Person!')
+        this.toast.error(error.error.msg)
+
         // this.errors = error.json().errors;
         // this.isLoading = false;
       },
@@ -153,7 +155,7 @@ export class AddContactPersonComponent implements OnInit {
     this.contactPersonService
       .updateProfileImage(payload, this.contactPersonForm.get('user_account_id').value)
       .subscribe(res => {
-        this.toast.success('Profile Image Updated Successfully')
+        // this.toast.success('Profile Image Updated Successfully')
       })
 
     this.contactPersonService
@@ -164,7 +166,15 @@ export class AddContactPersonComponent implements OnInit {
           this.router.navigate(['/pages/client-management/client', this.clientId]);
         },
         error => {
-          this.toast.error('Error Updating Contact Person!')
+          if (this.contactPersonId) {
+            let errorObj = error.error.errors
+            Object.keys(errorObj).map(key => {
+              if (key == 'email')
+                this.contactPersonForm.get(key).setErrors({ incorrect: true, emailUniqueError: errorObj[key][0] })
+            })
+            this.submitted = false;
+          } else
+            this.toast.error(error.error.msg)
           // this.errors = error.json().errors;
           // this.isLoading = false;
         },

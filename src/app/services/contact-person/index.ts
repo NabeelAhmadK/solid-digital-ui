@@ -180,13 +180,18 @@ export class ContactPersonService {
       headers: this.headers,
     })
   }
+  public getUserProfileImage(payload): Observable<any> {
+    return this.http.post(API_URL + '/users/image', payload, {
+      headers: this.headers,
+    })
+  }
   public updateProfileImage(profile_image, id) {
     return this.http.put(API_URL + `/users/${id}`, profile_image, {
       headers: this.headers,
     })
   }
 
-  public updateUser(payload) {
+  public updateUser(payload): Observable<any> {
     return this.http.put(API_URL + `/users/${payload.id}`, payload, {
       headers: this.headers,
     })

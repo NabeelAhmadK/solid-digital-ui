@@ -1,0 +1,40 @@
+<div>
+  <div class="row">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card mb-5">
+        <div class="card-body">
+          <div class="text-dark font-size-32 mb-3">Confirm Account</div>
+          <form nz-form [nzLayout]="'vertical'" [formGroup]="confirmAccountFrom" role="form">
+            <nz-form-item>
+              <nz-form-label nzFor="password">Password</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter your desired Password!">
+                <input type="password" nz-input formControlName="password" nzSize="large" placeholder="Password" />
+                <app-validation-popover [control]="confirmAccountFrom.controls.password" [show]="submitted">
+                </app-validation-popover>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzFor="c_password">Confirm Password</nz-form-label>
+              <nz-form-control nzErrorTip="Please confirm your Password!">
+                <input type="password" nz-input nzSize="large" formControlName="c_password"
+                  placeholder="Confirm Password" />
+                <app-validation-popover [control]="confirmAccountFrom.controls.c_password" [show]="submitted">
+                </app-validation-popover>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button (click)="Submit()" nzType="primary" [nzSize]="'large'" class="text-center w-100">
+                  <strong>Submit</strong>
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </div>
+      </div>
+      <a routerLink="/auth/login" class="kit__utils__link font-size-16">
+        <i class="fe fe-arrow-left mr-1 align-middle"></i>
+        Go to Sign in
+      </a>
+    </div>
+  </div>

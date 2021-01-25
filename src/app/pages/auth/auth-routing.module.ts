@@ -9,8 +9,8 @@ import { LockscreenPage } from 'src/app/pages/auth/lockscreen/lockscreen.compone
 import { ForgotPasswordPage } from 'src/app/pages/auth/forgot-password/forgot-password.component'
 import { Error500Page } from 'src/app/pages/auth/500/500.component'
 import { Error404Page } from 'src/app/pages/auth/404/404.component'
-import { ConfirmAccountComponent } from 'src/app/pages/auth/reset-password/confirm-account.component'
-
+import { ResetPasswordComponent } from 'src/app/pages/auth/reset-password/confirm-account.component'
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component'
 const routes: Routes = [
   {
     path: 'login',
@@ -23,7 +23,12 @@ const routes: Routes = [
     data: { title: 'Sign Up' },
   },
   {
-    path: 'reset-password/:token',
+    path: 'reset-password/:token/:email',
+    component: ResetPasswordComponent,
+    data: { title: 'Reset Password' },
+  },
+  {
+    path: 'confirm-account/:token/:email',
     component: ConfirmAccountComponent,
     data: { title: 'Confirm Account' },
   },
@@ -54,4 +59,4 @@ const routes: Routes = [
   providers: [],
   exports: [RouterModule],
 })
-export class AuthRouterModule {}
+export class AuthRouterModule { }

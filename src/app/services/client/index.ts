@@ -148,6 +148,12 @@ export class ClientService {
     return this.http.get<CustomResponse>(URI, { headers: this.headers })
   }
 
+  public getClientLogo(payload): Observable<any> {
+    let URI = `${API_URL}/clients/logo`
+    return this.http.post(URI, payload, { headers: this.headers })
+  }
+
+
   public saveClient(client) {
     return this.http.post(API_URL + '/clients', client, { headers: this.headers })
   }

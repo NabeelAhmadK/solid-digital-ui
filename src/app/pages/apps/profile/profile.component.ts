@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ContactPersonService } from '../../../services/contact-person'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { ValidationService } from '../../../pages/advanced/validation'
+import { jwtAuthService } from '../../../services/jwt';
 import { Router } from '@angular/router'
 @Component({
   selector: 'app-apps-profile',
@@ -25,7 +26,8 @@ export class AppsProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private contactPersonService: ContactPersonService,
     private toast: NzMessageService,
-    private router: Router
+    private router: Router,
+    private authService: jwtAuthService
   ) { }
 
   ngOnInit() {
@@ -44,7 +46,6 @@ export class AppsProfileComponent implements OnInit {
     })
 
     this.updatePasswordForm = this.formBuilder.group({
-      id: [null],
       password: [null, [Validators.required, Validators.minLength(6)]],
       c_password: [null, [Validators.required, Validators.minLength(6)]]
     }, {
@@ -72,13 +73,15 @@ export class AppsProfileComponent implements OnInit {
   UpdatePasword() {
     this.submitted = true;
     if (this.updatePasswordForm.invalid) return;
+    let result = this.updatePasswordForm.value;
+    delete result.c_password;
 
-    this.updatePasswordForm.get('id').setValue(this.userData.id);
-
-    this.contactPersonService.updateUser(this.updatePasswordForm.value)
-      .subscribe(res => {
-        this.toast.success('Password Updated Successfully');
-        this.router.navigate(['/auth/login'], { replaceUrl: true });
+    this.authService.changePassword(this.updatePasswordForm.value)
+      .subscribe(({ token }) => {
+        this.toast.success('Password Changed Successfully');
+        this.updatePasswordForm.reset();
+        localStorage.setItem('accessToken', token);
+        this.submitted = false;
       })
   }
 
@@ -86,11 +89,20 @@ export class AppsProfileComponent implements OnInit {
     this.profileForm.get('email').enable();
     let result = this.profileForm.value;
     if (!this.isImageUpdated) delete result.profile_image;
-    this.contactPersonService.updateUser(this.profileForm.value)
+    this.contactPersonService.updateUser(result)
       .subscribe(res => {
         this.profileForm.get('email').disable();
         this.toast.success('Profile Updated Successfully');
-        localStorage.setItem('userData', JSON.stringify(res['data']));
+        let userData = JSON.parse(localStorage.getItem('userData'));
+
+        // if (!this.isImageUpdated) {
+        this.contactPersonService.getUserProfileImage({ id: this.profileForm.get('id').value })
+          .subscribe(currentAccount => {
+            userData.profile_image.url = currentAccount.data.profile_image.url;
+          })
+        // }
+        userData.name = res.data.name
+        localStorage.setItem('userData', JSON.stringify(userData));
         window.location.reload();
       })
   }
@@ -117,11 +129,12 @@ export class AppsProfileComponent implements OnInit {
       file_formData.append('file', file)
       this.contactPersonService.uploadProfileImage(file_formData).subscribe(
         profile_image => {
+          this.isImageUpdated = true;
           this.toast.success('Profile Image Uploaded SuccessFully')
           this.profileForm.patchValue({
             profile_image: profile_image['name'],
           })
-          this.isImageUpdated = true;
+
         },
         error => {
           // this.errors = error.json().errors;

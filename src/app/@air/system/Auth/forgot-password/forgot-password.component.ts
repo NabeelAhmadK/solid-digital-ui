@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ValidationService } from '../../../../pages/advanced/validation'
 import { jwtAuthService } from '../../../../services/jwt'
 import { NzMessageService } from 'ng-zorro-antd/message'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'cui-system-forgot-password',
@@ -13,6 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
   submitted: boolean = false;
   forgotPasswordForm: FormGroup
   constructor(private formBuilder: FormBuilder,
+    private router: Router,
     private toast: NzMessageService,
     private authService: jwtAuthService) { }
 
@@ -29,6 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.authService.forgotPassword(this.forgotPasswordForm.value)
       .subscribe(({ msg }) => {
         this.toast.success(msg)
+        this.router.navigate(['/auth/login'], { replaceUrl: true })
       }, err => {
         this.toast.error(err.error.message)
       })
