@@ -12,6 +12,9 @@ import { Router } from '@angular/router'
 })
 export class ContentOverviewComponent implements OnInit {
 
+  page: any = 1
+  pageSize: any = 5
+  collectionSize: any = 0
   contents: Array<any> = []
   showLoading: boolean = false
 
@@ -31,6 +34,7 @@ export class ContentOverviewComponent implements OnInit {
       ({ data }) => {
         this.showLoading = false
         this.contents = data
+        this.collectionSize = this.contents.length;
       },
       err => {
         this.showLoading = false

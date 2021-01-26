@@ -20,6 +20,8 @@ enum Methods {
 })
 export class AddClientComponent implements OnInit {
 
+  page: any = 1
+  pageSize: any = 5
   clientId: any;
   contactPersons: Array<any> = []
   method: any;

@@ -13,6 +13,9 @@ import { Router } from '@angular/router'
 })
 export class ClientOverviewComponent implements OnInit {
 
+  page: any = 1
+  pageSize: any = 5
+  collectionSize: any = 0
   clients: Array<any> = []
   total$: Observable<number>
   showLoading: boolean = false
@@ -31,7 +34,9 @@ export class ClientOverviewComponent implements OnInit {
     this.showLoading = true
     this.clientService.getAllClients().subscribe(({ data }) => {
       this.showLoading = false
-      this.clients = data
+      this.collectionSize = data.length
+      this.clients = data;
+      console.log(this.clients)
     })
   }
 

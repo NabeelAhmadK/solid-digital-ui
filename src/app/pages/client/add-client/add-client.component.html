@@ -134,7 +134,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let contactPerson of contactPersons">
+                  <tr *ngFor="let contactPerson of contactPersons  | slice: (page-1) * pageSize : page * pageSize">
                     <td scope="row">
                       {{contactPerson.first_name}} {{contactPerson.last_name}}
                     </td>
@@ -157,6 +157,18 @@
                   </tr>
                 </tbody>
               </table>
+
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="contactPersons.length" [(page)]="page" [pageSize]="pageSize">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" [(ngModel)]="pageSize"
+                  [ngModelOptions]="{standalone: true}">
+                  <option [ngValue]="5">5 items per page</option>
+                  <option [ngValue]="10">10 items per page</option>
+                  <option [ngValue]="15">15 items per page</option>
+                </select>
+              </div>
             </form>
           </nz-spin>
         </div>
