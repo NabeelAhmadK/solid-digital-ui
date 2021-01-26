@@ -84,6 +84,8 @@ export class MenuLeftComponent implements OnInit {
         (state.menuType === 'flyout' || state.menuType === 'compact' || state.isMenuCollapsed) &&
         !state.isMobileView
     })
+    this.flyoutActive = false;
+    this.isMobileView = false;
     this.setActiveItems(this.router.url)
     this.router.events
       .pipe(filter(event => event instanceof NavigationStart))
@@ -122,9 +124,9 @@ export class MenuLeftComponent implements OnInit {
 
   handleSubmenuClick(key: string) {
     const currentKey = this.activeSubmenu
-    if (this.flyoutActive) {
-      return
-    }
+    // if (this.flyoutActive) {
+    //   return
+    // }
     this.activeSubmenu = currentKey === key ? '' : key
   }
 
@@ -158,28 +160,28 @@ export class MenuLeftComponent implements OnInit {
   handleFlyoutOver(event, key, items) {
     if (this.flyoutActive) {
       clearInterval(this.flyoutTimers[key])
-      const item = event.currentTarget
-      const itemDimensions = item.getBoundingClientRect()
-      this.renderedFlyoutItems = {
-        ...this.renderedFlyoutItems,
-        [key]: {
-          key,
-          itemDimensions,
-          items,
-        },
-      }
+      // const item = event.currentTarget
+      // const itemDimensions = item.getBoundingClientRect()
+      // this.renderedFlyoutItems = {
+      //   ...this.renderedFlyoutItems,
+      //   [key]: {
+      //     key,
+      //     itemDimensions,
+      //     items,
+      //   },
+      // }
     }
   }
 
   handleFlyoutOut(key) {
     if (this.flyoutActive) {
-      this.flyoutTimers[key] = setTimeout(() => {
-        const updatedFlyoutItems = Object.assign({}, this.renderedFlyoutItems)
-        delete updatedFlyoutItems[key]
-        this.renderedFlyoutItems = {
-          ...updatedFlyoutItems,
-        }
-      }, 100)
+      // this.flyoutTimers[key] = setTimeout(() => {
+      //   const updatedFlyoutItems = Object.assign({}, this.renderedFlyoutItems)
+      //   delete updatedFlyoutItems[key]
+      //   this.renderedFlyoutItems = {
+      //     ...updatedFlyoutItems,
+      //   }
+      // }, 100)
     }
   }
 
