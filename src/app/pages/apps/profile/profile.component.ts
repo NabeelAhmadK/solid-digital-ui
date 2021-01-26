@@ -96,10 +96,10 @@ export class AppsProfileComponent implements OnInit {
         let userData = JSON.parse(localStorage.getItem('userData'));
 
         // if (!this.isImageUpdated) {
-        this.contactPersonService.getUserProfileImage({ id: this.profileForm.get('id').value })
-          .subscribe(currentAccount => {
-            userData.profile_image.url = currentAccount.data.profile_image.url;
-          })
+        // this.contactPersonService.getUserProfileImage({ id: this.profileForm.get('id').value })
+        //   .subscribe(currentAccount => {
+        //     userData.profile_image.url = currentAccount.data.profile_image.url;
+        //   })
         // }
         userData.name = res.data.name
         localStorage.setItem('userData', JSON.stringify(userData));
