@@ -6,9 +6,7 @@ export const environment = {
   production: true,
   authenticated: false,
   hmr: false,
-  // URL of Laravel backend
-  baseUrl: 'http://54.220.253.6',
-  // baseUrl: 'http://localhost:8001',
+  baseUrl: 'http://localhost:8001',
 }
 
 /*
